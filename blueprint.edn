@@ -1,0 +1,11 @@
+{:itonami.blueprint/id "cloud-itonami-isic-4662"
+ :itonami.blueprint/name "Wholesale of metals and metal ores"
+ :itonami.blueprint/isic-rev5 "4662"
+ :itonami.blueprint/domain :midstream/metal-wholesale
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:responsible-sourcing :human-rights :transparency]
+ :itonami.blueprint/governor :metal-trading-governor
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger :optimization]
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/maturity :implemented}
