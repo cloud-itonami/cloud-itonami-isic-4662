@@ -6,10 +6,24 @@
   (is (some? (facts/spec-basis "JPN")))
   (is (string? (:provenance (facts/spec-basis "JPN")))))
 
-(deftest all-four-seeded-jurisdictions-have-required-evidence
+(deftest arg-has-a-spec-basis
+  ;; ARG (Argentina) -- Resolución General (AFIP) N° 2849/2010, "Registro
+  ;; de Comercializadores de Materiales a Reciclar" (Art. 1, inc. e:
+  ;; "Metales ferrosos o no ferrosos"), verified by direct fetch of
+  ;; https://servicios.infoleg.gob.ar/infolegInternet/anexos/165000-169999/168455/norma.htm
+  (let [basis (facts/spec-basis "ARG")]
+    (is (some? basis))
+    (is (= "ARG" (:name basis)))
+    (is (string? (:provenance basis)))
+    (is (re-find #"infoleg\.gob\.ar" (:provenance basis)))
+    (is (re-find #"2849" (:legal-basis basis)) "cites AFIP RG 2849/2010")
+    (is (re-find #"AFIP" (:owner-authority basis)))
+    (is (= 3 (count (:required-evidence basis))))))
+
+(deftest all-five-seeded-jurisdictions-have-required-evidence
   ;; every seeded metal-wholesale jurisdiction actually has a real
   ;; required-evidence set reported honestly here
-  (doseq [iso3 ["JPN" "USA" "GBR" "DEU"]]
+  (doseq [iso3 ["JPN" "USA" "GBR" "DEU" "ARG"]]
     (is (seq (facts/evidence-checklist iso3)) (str iso3 " required-evidence"))))
 
 (deftest unknown-jurisdiction-has-no-fabricated-spec-basis
@@ -51,8 +65,16 @@
   (is (= facts/oecd-guidance (facts/conflict-minerals-citation "GBR")))
   (is (false? (:binding? facts/oecd-guidance))))
 
+(deftest arg-has-no-binding-conflict-minerals-statute-falls-back-to-oecd
+  ;; ARG has a `catalog` entry (general trade spec-basis) but, like JPN
+  ;; and GBR, no Argentina-specific binding conflict-minerals statute was
+  ;; found -- honest fallback to the OECD Guidance baseline, not a
+  ;; fabricated statute.
+  (is (nil? (get facts/conflict-minerals-basis "ARG")))
+  (is (= facts/oecd-guidance (facts/conflict-minerals-citation "ARG"))))
+
 (deftest conflict-minerals-citation-never-nil
   ;; every jurisdiction gets AT LEAST the OECD baseline -- even one with
   ;; no spec-basis at all in the general `catalog`.
-  (doseq [iso3 ["JPN" "USA" "GBR" "DEU" "ATL"]]
+  (doseq [iso3 ["JPN" "USA" "GBR" "DEU" "ARG" "ATL"]]
     (is (some? (facts/conflict-minerals-citation iso3)))))
