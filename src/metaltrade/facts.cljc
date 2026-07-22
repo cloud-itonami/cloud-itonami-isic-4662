@@ -24,6 +24,50 @@
   only -- metals and metal ores carry no analogous commodity-specific
   excise the way fuel, alcohol or tobacco do.
 
+  Argentina (ARG) is a DELIBERATE EXCEPTION to the 'general customs law
+  only' pattern above. For Argentina, the most specifically verifiable
+  and genuinely citable in-force mechanism actually aimed at THIS
+  sector (metal / scrap-metal wholesale) is not a general customs code
+  provision but a metals/recyclables-specific tax-agency regime:
+  Resolución General (AFIP) N° 2849/2010, 'Registro de Comercializadores
+  de Materiales a Reciclar' -- confirmed by direct fetch of its full
+  text at https://servicios.infoleg.gob.ar/infolegInternet/anexos/165000-169999/168455/norma.htm
+  (2026-07-23). Its Article 1 creates the 'Registro' and enumerates FIVE
+  covered material classes, one of which is metal: 'a) PET. b) Papel y
+  cartón. c) Vidrio. d) Plástico. e) Metales ferrosos o no ferrosos.'
+  Article 2 requires registration by five operator categories
+  (recicladores / acopiadores / galponeros / generadores de \"scrap\" /
+  intermediarios). Beyond registration, it layers a genuinely useful
+  provenance/traceability mechanism for exactly the metal-theft concern
+  this catalog is meant to capture: Título III (Arts. 55-61) is a
+  monthly seller-identifying information regime for purchase operations
+  (seller name, CUIT/DNI, receipt number/date, description, kg,
+  price -- Form 956), and Título IV Cap. II (Arts. 64-66, Anexo IX)
+  mandates a special duplicate purchase receipt specifically for
+  purchases made directly from individual informal collectors
+  ('recolectores'). AFIP itself was dissolved and succeeded, effective
+  2024-10-24, by the Agencia de Recaudación y Control Aduanero (ARCA)
+  per Decreto 953/2024 Art. 1 ('Disuélvese la ADMINISTRACIÓN FEDERAL DE
+  INGRESOS PÚBLICOS (AFIP)...') / Art. 2 ('Créase la AGENCIA DE
+  RECAUDACIÓN Y CONTROL ADUANERO (ARCA)...'), confirmed by direct fetch
+  of https://www.boletinoficial.gob.ar/detalleAviso/primera/316055/20241025
+  (2026-07-23); ARCA continues to administer this same registry (the
+  legacy 'servicioscf.afip.gob.ar/Publico/RG2849/Consulta.aspx' registry
+  lookup page was still live under that domain as of the same date). The
+  citation below therefore names AFIP as the resolution's own issuing
+  authority (that is its actual, unaltered legal citation) while noting
+  ARCA as the current administering successor -- this is NOT a
+  hypothesis about an AML statute; it is this catalog's honest read of
+  the actual in-force instrument, which is framed by AFIP/ARCA as a tax
+  procedure / information-and-retention regime rather than as a
+  freestanding anti-money-laundering law, even though it functions as
+  Argentina's closest real analogue to a metal-trade provenance control.
+  ARG has NO entry in `conflict-minerals-basis` below, for the same
+  reason JPN and GBR (also present in `catalog`) have none: no
+  Argentina-specific binding conflict-minerals statute was found, so it
+  falls back to the OECD Guidance baseline like every other
+  non-USA/DEU jurisdiction (see `conflict-minerals-citation`).
+
   `conflict-minerals-basis` is a DIFFERENT catalog because the real-world
   legal picture is different in kind: Dodd-Frank Section 1502 and EU
   Regulation 2017/821 do not bind the SELLER'S jurisdiction the way
@@ -76,6 +120,13 @@
           :owner-authority "Generalzolldirektion (German Customs) under the Bundesministerium der Finanzen (BMF)"
           :legal-basis "Union Customs Code (Regulation (EU) No 952/2013); EU financial sanctions regulations"
           :provenance "https://www.zoll.de/"
+          :required-evidence ["credit-clearance record"
+                              "contract/PO"
+                              "sanctions-screening (OFAC/equivalent) record"]}
+   "ARG" {:name "ARG"
+          :owner-authority "Administración Federal de Ingresos Públicos (AFIP) -- disuelta el 24/10/2024 y sucedida por la Agencia de Recaudación y Control Aduanero (ARCA), ambas entidades autárquicas del Ministerio de Economía (Decreto 953/2024, Arts. 1-2)"
+          :legal-basis "Resolución General (AFIP) N° 2849/2010: crea el \"Registro de Comercializadores de Materiales a Reciclar\" (Art. 1, inc. e: \"Metales ferrosos o no ferrosos\"; registration required per Art. 2 for recicladores/acopiadores/galponeros/generadores de \"scrap\"/intermediarios); régimen mensual de información de operaciones de compra por vendedor (Título III, Arts. 55-61, Formulario 956); comprobante especial de compra a recolectores individuales (Título IV, Cap. II, Arts. 64-66, Anexo IX)"
+          :provenance "https://servicios.infoleg.gob.ar/infolegInternet/anexos/165000-169999/168455/norma.htm"
           :required-evidence ["credit-clearance record"
                               "contract/PO"
                               "sanctions-screening (OFAC/equivalent) record"]}})
