@@ -45,10 +45,9 @@
   running its own Dodd-Frank/EU 2017/821 due diligence, or an operator
   trusting a metal-wholesale actor needs, and the evidence an operator
   needs if a dispatch or an invoice is later disputed."
-  (:require #?(:clj  [clojure.edn :as edn]
-               :cljs [cljs.reader :as edn])
-            [metaltrade.registry :as registry]
-            [langchain.db :as d]))
+  (:require [metaltrade.registry :as registry]
+            [langchain.db :as d]
+            [langchain-store.core :as ls]))
 
 (defprotocol Store
   (metal-order [s id])
@@ -225,9 +224,6 @@
    :dispatch-sequence/jurisdiction       {:db/unique :db.unique/identity}
    :invoice-sequence/jurisdiction        {:db/unique :db.unique/identity}})
 
-(defn- enc [v] (pr-str v))
-(defn- dec* [s] (when s (edn/read-string s)))
-
 ;; Every metal-order field is stored as its own Datomic attr so a
 ;; governor pull reads the exact ground truth (no blob decode). Boolean
 ;; fields are coerced on read so a missing attr reads back as false
@@ -281,21 +277,21 @@
          (map #(pull->metal-order (d/pull (d/db conn) metal-order-pull [:metal-order/id %])))
          (sort-by :id)))
   (assessment-of [_ metal-order-id]
-    (dec* (d/q '[:find ?p . :in $ ?moid
+    (ls/dec* (d/q '[:find ?p . :in $ ?moid
                 :where [?a :assessment/metal-order-id ?moid] [?a :assessment/payload ?p]]
               (d/db conn) metal-order-id)))
   (ledger [_]
     (->> (d/q '[:find ?s ?f :where [?e :ledger/seq ?s] [?e :ledger/fact ?f]] (d/db conn))
          (sort-by first)
-         (mapv (comp dec* second))))
+         (mapv (comp ls/dec* second))))
   (dispatch-history [_]
     (->> (d/q '[:find ?s ?r :where [?e :dispatch/seq ?s] [?e :dispatch/record ?r]] (d/db conn))
          (sort-by first)
-         (mapv (comp dec* second))))
+         (mapv (comp ls/dec* second))))
   (invoice-history [_]
     (->> (d/q '[:find ?s ?r :where [?e :invoice/seq ?s] [?e :invoice/record ?r]] (d/db conn))
          (sort-by first)
-         (mapv (comp dec* second))))
+         (mapv (comp ls/dec* second))))
   (next-dispatch-sequence [_ jurisdiction]
     (or (d/q '[:find ?n . :in $ ?j
               :where [?e :dispatch-sequence/jurisdiction ?j] [?e :dispatch-sequence/next ?n]]
@@ -316,7 +312,7 @@
       (d/transact! conn [(metal-order->tx value)])
 
       :provenance-assessment/set
-      (d/transact! conn [{:assessment/metal-order-id (first path) :assessment/payload (enc payload)}])
+      (d/transact! conn [{:assessment/metal-order-id (first path) :assessment/payload (ls/enc payload)}])
 
       :order/mark-dispatched
       (let [metal-order-id (first path)
@@ -326,7 +322,7 @@
         (d/transact! conn
                      [(metal-order->tx (assoc metal-order-patch :id metal-order-id))
                       {:dispatch-sequence/jurisdiction jurisdiction :dispatch-sequence/next next-n}
-                      {:dispatch/seq (count (dispatch-history s)) :dispatch/record (enc (get result "record"))}])
+                      {:dispatch/seq (count (dispatch-history s)) :dispatch/record (ls/enc (get result "record"))}])
         result)
 
       :order/mark-invoiced
@@ -337,12 +333,12 @@
         (d/transact! conn
                      [(metal-order->tx (assoc metal-order-patch :id metal-order-id))
                       {:invoice-sequence/jurisdiction jurisdiction :invoice-sequence/next next-n}
-                      {:invoice/seq (count (invoice-history s)) :invoice/record (enc (get result "record"))}])
+                      {:invoice/seq (count (invoice-history s)) :invoice/record (ls/enc (get result "record"))}])
         result)
       nil)
     s)
   (append-ledger! [s fact]
-    (d/transact! conn [{:ledger/seq (count (ledger s)) :ledger/fact (enc fact)}])
+    (d/transact! conn [{:ledger/seq (count (ledger s)) :ledger/fact (ls/enc fact)}])
     fact)
   (with-metal-orders [s metal-orders]
     (when (seq metal-orders) (d/transact! conn (mapv metal-order->tx (vals metal-orders)))) s))
