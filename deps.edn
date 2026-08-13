@@ -17,10 +17,21 @@
  ;; the workspace); the :local/root paths only resolve inside the
  ;; monorepo checkout -- a standalone fork should override them with git
  ;; coordinates.
+ ;;
+ ;; jp-go-digital-design-system (DADS, デジタル庁デザインシステム) is the
+ ;; workspace-wide BASE design system. It is a git coordinate rather than a
+ ;; :local/root because the operator console is a build artifact that a
+ ;; standalone fork must still be able to regenerate. `render_html.clj`
+ ;; consumes `jp-go-dds.skin/dds+skin` -- vendored dds.css (tokens) plus the
+ ;; compat skin -- and layers only this repo's console layout on top; the
+ ;; console's palette is read from DADS tokens, not from raw hex.
  :deps {io.github.kotoba-lang/langgraph
         {:local/root "../../kotoba-lang/langgraph"}
         io.github.kotoba-lang/langchain-store
-        {:local/root "../../kotoba-lang/langchain-store"}}
+        {:local/root "../../kotoba-lang/langchain-store"}
+        io.github.kotoba-lang/jp-go-digital-design-system
+        {:git/url "https://github.com/kotoba-lang/jp-go-digital-design-system"
+         :git/sha "83db99546eabc53613ae826ea41d1533a3c574af"}}
  :aliases
  {;; offline workspace dev -- pin transitive langchain to local checkout
   :dev {:override-deps

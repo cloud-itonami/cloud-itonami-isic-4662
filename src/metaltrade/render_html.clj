@@ -53,6 +53,7 @@
      console that shows only green is not evidence the governor works."
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
+            [jp-go-dds.skin :as dds-skin]
             [langgraph.graph :as g]
             [metaltrade.facts :as facts]
             [metaltrade.operation :as operation]
@@ -310,14 +311,28 @@
     :else        (esc (str v))))
 
 (def ^:private css "
-:root{--ink:#1a1a1c;--muted:#626569;--line:#d8dadc;--bg:#f2f2f2;--card:#fff;
---blue:#0017c1;--blue-soft:#e8eaf9;--red:#c9252d;--red-soft:#fce8e9;
---amber:#8a6100;--amber-soft:#fdf3e0;--green:#197a4b;--green-soft:#e5f2eb;}
+/* Console layout, layered ON TOP of jp-go-dds.skin/dds+skin (vendored
+   dds.css + compat skin). Every colour below resolves to a DADS token --
+   no raw hex -- so the palette moves when the design system moves.
+   `--blue` is DADS' デジタル庁ブルー (blue-900, #0017c1).
+   The skin centres `body` at 64rem for prose pages; this console is a
+   full-bleed header + its own 1180px main, so those three properties are
+   reset here rather than in the shared skin. */
+:root{--ink:var(--color-neutral-solid-gray-900);
+--muted:var(--color-neutral-solid-gray-600);
+--line:var(--color-neutral-solid-gray-200);
+--bg:var(--color-neutral-solid-gray-50);
+--card:var(--color-neutral-white);
+--blue:var(--color-primitive-blue-900);--blue-soft:var(--color-primitive-blue-50);
+--red:var(--color-primitive-red-900);--red-soft:var(--color-primitive-red-50);
+--amber:var(--color-primitive-orange-900);--amber-soft:var(--color-primitive-orange-50);
+--green:var(--color-primitive-green-800);--green-soft:var(--color-primitive-green-50);
+--hairline:var(--color-neutral-solid-gray-100);}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-font-family:'Noto Sans JP',system-ui,-apple-system,'Segoe UI',sans-serif;
+body{max-width:none;margin:0;padding:0;background:var(--bg);color:var(--ink);
+font-family:var(--font-family-sans);
 font-size:14px;line-height:1.7}
-header.bar{background:var(--blue);color:#fff;padding:20px 24px}
+header.bar{background:var(--blue);color:var(--color-neutral-white);padding:20px 24px}
 header.bar h1{margin:0;font-size:20px;font-weight:700;letter-spacing:.01em}
 header.bar p{margin:6px 0 0;font-size:13px;opacity:.9}
 main{max-width:1180px;margin:24px auto 64px;padding:0 20px}
@@ -329,9 +344,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}
 th{text-align:left;font-size:11px;font-weight:700;color:var(--muted);
 text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;
 border-bottom:2px solid var(--line);white-space:nowrap}
-td{padding:9px 10px;border-bottom:1px solid #eceded;vertical-align:top}
+td{padding:9px 10px;border-bottom:1px solid var(--hairline);vertical-align:top}
 tr:last-child td{border-bottom:none}
-td.mono,th.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+td.mono,th.mono{font-family:var(--font-family-mono);font-size:12px}
 td.num{text-align:right;font-variant-numeric:tabular-nums}
 .pill{display:inline-block;padding:2px 9px;border-radius:11px;font-size:11px;
 font-weight:700;white-space:nowrap}
@@ -339,18 +354,19 @@ font-weight:700;white-space:nowrap}
 .pill.gate{background:var(--amber-soft);color:var(--amber)}
 .pill.commit{background:var(--green-soft);color:var(--green)}
 .pill.info{background:var(--blue-soft);color:var(--blue)}
-.pill.flat{background:#ececec;color:var(--muted)}
+.pill.flat{background:var(--color-neutral-solid-gray-100);color:var(--muted)}
 .kpi{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 4px;padding:0;list-style:none}
 .kpi li{flex:1 1 150px;border:1px solid var(--line);border-radius:6px;padding:12px 14px}
 .kpi b{display:block;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
 .kpi span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .kpi li.hot{border-color:var(--red);background:var(--red-soft)}
 .kpi li.hot b{color:var(--red)}
-.note{background:#f7f8fa;border-left:3px solid var(--blue);padding:10px 14px;
-margin:14px 0 0;font-size:12.5px;color:#3a3d40}
+.note{background:var(--color-neutral-solid-gray-50);border-left:3px solid var(--blue);
+padding:10px 14px;margin:14px 0 0;font-size:12.5px;
+color:var(--color-neutral-solid-gray-800)}
 .note.warn{border-left-color:var(--amber);background:var(--amber-soft)}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
-background:#f0f1f3;padding:1px 5px;border-radius:3px}
+code{font-family:var(--font-family-mono);font-size:12px;
+background:var(--color-neutral-solid-gray-100);padding:1px 5px;border-radius:3px}
 footer{max-width:1180px;margin:0 auto 48px;padding:0 20px;color:var(--muted);font-size:12px}
 ")
 
@@ -656,7 +672,10 @@ footer{max-width:1180px;margin:0 auto 48px;padding:0 20px;color:var(--muted);fon
     (str "<!doctype html><html lang=\"ja\"><head><meta charset=\"utf-8\">"
          "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
          "<title>cloud-itonami · metaltrade — Operator Console</title>"
-         "<style>" css "</style></head><body>"
+         ;; DADS first (vendored dds.css tokens + compat skin), this
+         ;; console's layout second -- the later rules win, and every
+         ;; colour they use resolves back to a DADS token.
+         "<style>" (dds-skin/dds+skin) css "</style></head><body>"
          "<header class=\"bar\"><h1>金属・金属鉱石卸売 — Operator Console</h1>"
          "<p>cloud-itonami-isic-4662 · MetalTradeAdvisor ⊣ :metal-trading-governor · "
          "このページは metaltrade.render-html が actor を実際に実行して生成した — "
