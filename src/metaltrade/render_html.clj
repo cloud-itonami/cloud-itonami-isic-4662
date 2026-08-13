@@ -441,7 +441,7 @@ footer{max-width:1180px;margin:0 auto 48px;padding:0 20px;color:var(--muted);fon
                         (str "<code>" (cell (:subject request)) "</code>")
                         (pill "refuse" (str (:rule v)))
                         (esc (str (:detail v)))]))))
-     (str "<p class=\"note warn\">この 8 件のうち "
+     (str "<p class=\"note warn\">この " (count holds) " 件のうち "
           "<code>:conflict-minerals-provenance-unverified</code> がこの業種固有の検査で、"
           "法域ではなく<strong>金属種</strong>だけで発火する。mo-6（gold）と mo-7（copper）は"
           "chain-of-custody / 製錬所認証がどちらも同じく未充足だが、"
@@ -474,8 +474,15 @@ footer{max-width:1180px;margin:0 auto 48px;padding:0 20px;color:var(--muted);fon
           "何も拒否していない（<code>:hard? false</code>、violation 0 件）が、phase 1 は"
           "<code>:order/intake</code> しか書き込ませないので <code>:phase-disabled</code> で hold した。"
           "<code>t20</code> は governor clean のまま人間の承認者が拒否したもので、"
-          "その fact は <code>{:rule :approver-rejected}</code> を自分で載せている — "
-          "violation の有無だけで数えていたら、この 2 件は governor 拒否として過大計上される。</p>"))))
+          "その fact は <code>{:rule :approver-rejected}</code> を自分で載せている。"
+          "この節の "
+          (let [held (filterv #(= :hold (:disposition %)) gated)]
+            (str (count held) " 件を <code>:disposition :hold</code> だけで数えると"
+                 "そのまま governor 拒否に混入し、audit fact の <code>:violations</code> の"
+                 "有無で数えても "
+                 (count (filterv #(seq (:violations (terminal-fact {:audit (:audit %)}))) held))
+                 " 件は取り除けない"))
+          " — だから分類は fact の <code>:t</code> を第一根拠にしている。</p>"))))
 
 (defn- register-section [db]
   (section
@@ -543,42 +550,73 @@ footer{max-width:1180px;margin:0 auto 48px;padding:0 20px;color:var(--muted);fon
                 (cell (get r "immutable"))]))))))
 
 (defn- attribution-section [db runs]
-  (let [rep     (attribution-report db runs)
-        lossy   (filterv #(and (:payload-carries %) (not (:store-retains %))) rep)
-        granted (count (filterv #(= :approval-granted (:t %)) (store/ledger db)))]
+  (let [rep      (attribution-report db runs)
+        by-eff   (sort-by (comp str first) (group-by :effect rep))
+        granted  (count (filterv #(and (= :approved (:resume %)) (= :committed (:class %))) runs))
+        led      (store/ledger db)
+        led-facts (count (filterv #(= :approval-granted (:t %)) led))
+        audit-facts (reduce + (map (fn [r] (count (filter #(= :approval-granted (:t %)) (:audit r))))
+                                   runs))
+        led-retains (retains-approver? led)
+        lossy    (filterv (fn [[_ xs]] (not (:store-retains (first xs)))) by-eff)]
     (section
      "承認者の帰属 — レンダリング時に実測"
      (str "この節はコードに書き込んだ結論ではなく、実行後の store を"
-          "「approver 形のキー」で走査した結果。store が直れば、この表も自動的に直る。")
-     (table ["commit した effect" "書き込み先" "subject" ":payload に approver" ":value に approver" "store に残ったか"]
-            (for [{:keys [effect surface subject payload-carries value-carries store-retains]} rep]
-              [(str "<code>" (cell effect) "</code>")
-               (esc surface)
-               (str "<code>" (cell subject) "</code>")
-               (if payload-carries (pill "commit" "あり") (pill "flat" "なし"))
-               (if value-carries   (pill "commit" "あり") (pill "flat" "なし"))
-               (if store-retains   (pill "commit" "保持") (pill "refuse" "失われる"))]))
-     (str "<p class=\"note" (if (seq lossy) " warn" "") "\">"
+          "「approver 形のキー」（正規表現 /approv/i）で走査した結果。"
+          "store が直れば、この表も自動的に直る。")
+     (table ["commit した effect" "書き込み先" "commit 件数" ":payload に approver" ":value に approver" "承認者が残るか"]
+            (concat
+             (for [[effect xs] by-eff
+                   :let [x (first xs)]]
+               [(str "<code>" (cell effect) "</code>")
+                (esc (:surface x))
+                (str "<span class=\"num\">" (count xs) "</span>")
+                (if (:payload-carries x) (pill "commit" "あり") (pill "flat" "なし"))
+                (if (:value-carries x)   (pill "commit" "あり") (pill "flat" "なし"))
+                (if (:store-retains x)   (pill "commit" "保持") (pill "refuse" "失われる"))])
+             [[(str "<code>" (cell :approval-granted) "</code>")
+               "append-only 監査台帳"
+               (str "<span class=\"num\">" led-facts "</span>")
+               (pill "flat" "—")
+               (pill "flat" "—")
+               (if led-retains (pill "commit" "保持") (pill "refuse" "失われる"))]]))
+     (str "<p class=\"note warn\">"
           "この実行では人間の承認が <strong>" granted "</strong> 件下りた。"
           "実行 actor は <code>" (esc actor-id) "</code>、承認者は <code>" (esc approver-id)
           "</code> と<strong>別の識別子</strong>にしてある — "
           "台帳の <code>:committed</code> fact が持つ <code>:actor</code> は"
-          "<em>実行した actor</em> であって承認者ではないので、同じ id を使うと"
-          "この 2 つを取り違えても正しく見えてしまう。"
-          (if (seq lossy)
-            (str "実測の結果 <strong>" (count lossy) " 件の effect で承認者が失われている</strong>: "
-                 (str/join "、" (map #(str "<code>" (cell (:effect %)) "</code>") lossy))
-                 "。<code>metaltrade.operation/commit-record</code> は承認者を <code>:payload</code> "
-                 "にだけ載せるが、<code>metaltrade.store</code> の MemStore は "
-                 "<code>:order/upsert</code> で <code>:value</code> を読み、"
-                 "<code>:order/mark-dispatched</code> / <code>:order/mark-invoiced</code> では"
-                 "どちらも読まない。したがって「この出荷を承認したのは誰か」は"
-                 "台帳の <code>:approval-granted</code> fact からしか辿れず、"
-                 "レジスタや出荷ドラフト自体には残らない。"
-                 "<strong>これはこのタスクでは修正していない — 開示だけしている</strong>"
-                 "（レンダリング作業の中で store の意味論を黙って変えない）。")
-            "この実行では、承認が下りたすべての effect で承認者が store に残った。")
-          "</p>"))))
+          "<em>実行した actor</em> であって承認者ではないので、両者に同じ id を使うと"
+          "この 2 つを取り違えたまま正しく見えてしまう"
+          "（<code>metaltrade.sim</code> は両方に <code>op-1</code> を使っている）。"
+          (when (seq lossy)
+            (str "<br><br>実測の結果、<strong>" (count lossy)
+                 " 種類の effect で承認者が store に残らない</strong>: "
+                 (str/join "、" (map #(str "<code>" (cell (first %)) "</code>") lossy))
+                 "。<code>metaltrade.operation/commit-record</code> は承認者を "
+                 "<code>:payload</code> にだけ載せるが、<code>metaltrade.store</code> の "
+                 "MemStore は <code>:order/upsert</code> で <code>:value</code> を読み、"
+                 "<code>:order/mark-dispatched</code> / <code>:order/mark-invoiced</code> "
+                 "ではどちらも読まない。"))
+          (when (zero? led-facts)
+            (str "<br><br><strong>さらに重い問題: 承認は台帳にも残っていない。</strong>"
+                 "この実行の各 run の <code>:audit</code> チャネルには "
+                 "<code>:approval-granted</code> fact が <strong>" audit-facts
+                 "</strong> 件生成されたが、append-only 台帳に到達したのは <strong>"
+                 led-facts "</strong> 件である。"
+                 "<code>metaltrade.operation</code> の <code>:commit</code> ノードは "
+                 "<code>commit-fact</code> だけを <code>append-ledger!</code> し、"
+                 "<code>:hold</code> ノードは <code>:governor-hold</code> / "
+                 "<code>:approval-rejected</code> だけを永続化する — "
+                 "<code>:approval-granted</code> を台帳に書くノードが存在せず、"
+                 "run が終わると in-memory の audit チャネルごと失われる。"
+                 "結果として、この実行で承認者 <code>" (esc approver-id)
+                 "</code> の識別子が残っているのは <code>:provenance-assessment/set</code> の "
+                 "payload だけで、レジスタにも出荷・請求ドラフトにも台帳にも残らない。"
+                 "<code>metaltrade.store</code> の namespace docstring は台帳について "
+                 "「approved by whom は immutable log への query で always 答えられる」と"
+                 "述べているが、<strong>この実装ではその query は答えられない。</strong>"))
+          "<br><br><strong>この 2 点はこのタスクでは修正していない — 開示のみ。</strong>"
+          "レンダリング作業の中で store / actor の監査意味論を黙って変えない。</p>"))))
 
 (defn- coverage-section []
   (let [c (facts/coverage)]
