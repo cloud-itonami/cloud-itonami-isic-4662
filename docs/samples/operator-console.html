@@ -1,23 +1,2521 @@
-<html><head><meta charset="utf-8"><title>cloud-itonami · metaltrade</title><style>table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.ok { color: #137a3f; }
-body { font-family: system-ui,-apple-system,sans-serif; margin: 0; color: #1a1a1a; background: #fafafa; }
-header.bar { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #f0f0f0; }
-h2 { margin-top: 0; font-size: 15px; }
-td.num { font-variant-numeric: tabular-nums; text-align: right; }
-.warn { color: #b25c00; background: #fff8e1; padding: 2px 6px; border-radius: 4px; }
-main { max-width: 1120px; margin: 24px auto; padding: 0 20px; }
-header.bar h1 { font-size: 18px; margin: 0; font-weight: 600; }
-.muted { color: #888; }
-.critical { color: #fff; background: #b3261e; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
-.card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
-.err { color: #b3261e; background: #fbe9e7; padding: 2px 6px; border-radius: 4px; }
-button { font: inherit; padding: 4px 10px; border: 1px solid #d0d0d0; border-radius: 4px; background: #fff; color: #1a1a1a; cursor: pointer; }
-button.dispatch { color: #137a3f; border-color: #137a3f; }
-button.settle { color: #1a6fb8; border-color: #1a6fb8; }
-button:disabled { color: #aaa; border-color: #e0e0e0; cursor: not-allowed; }
-th { font-weight: 600; color: #555; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
-header.bar .badge { margin-left: auto; font-size: 12px; color: #666; }
-.tag { font-size: 11px; padding: 1px 6px; border-radius: 10px; background: #eee; color: #555; }
-.tag.cm { background: #fde7e7; color: #a33; }
-</style></head><body><header class="bar"><h1>Wholesale of Metals and Metal Ores — Operator Console</h1><span class="badge">read-only · governor-gated · human sign-off required</span></header><main><section class="card"><h2>Counterparty diligence + conflict-minerals provenance · mo-1 (tin, Kaminski Metals Trading GmbH, JPN)</h2><table><thead><tr><th>Check</th><th>Fact</th><th>Required</th><th>Verdict</th></tr></thead><tbody><tr><td>Counterparty credit</td><td>cleared</td><td>credit-cleared? true</td><td><span class="ok">✓ cleared</span></td></tr><tr><td>Contract on file</td><td>CIF, net 30 days</td><td>contract-terms present</td><td><span class="ok">✓ on file</span></td></tr><tr><td>Conflict-minerals chain of custody <span class="tag cm">3TG/cobalt</span></td><td>documented to mine of origin</td><td>chain-of-custody-documented? true</td><td><span class="ok">✓ documented</span></td></tr><tr><td>Conflict-free smelter certification <span class="tag cm">3TG/cobalt</span></td><td>RMI/RMAP-conformant</td><td>conflict-free-smelter-certified? true</td><td><span class="ok">✓ certified</span></td></tr><tr><td>Sanctions screening (OFAC / equivalent)</td><td>screened</td><td>sanctions-screened? true</td><td><span class="ok">✓ screened</span></td></tr><tr><td>Evidence (credit / contract-PO / sanctions)</td><td>3 / 3</td><td>JPN 関税法 / 輸出貿易管理令</td><td><span class="ok">✓ complete</span></td></tr></tbody></table><p class="muted" style="margin-bottom:0">Governor clean — but <strong>:delivery/dispatch still escalates to a human trading supervisor</strong> (never auto-commits at any phase).</p></section><section class="card"><h2>Metal-orders</h2><table><thead><tr><th>ID</th><th>Order</th><th>Metal</th><th>Counterparty</th><th>Jurisdiction</th><th>Governor verdict</th><th>Action</th></tr></thead><tbody><tr><td>mo-1</td><td>MO-2026-0001</td><td>tin <span class="tag cm">3TG</span></td><td>Kaminski Metals Trading GmbH</td><td>JPN</td><td><span class="warn">escalate · dispatch</span></td><td><button class="dispatch">Dispatch…</button> <button class="settle" disabled>Settle</button></td></tr><tr><td>mo-7</td><td>MO-2026-0007</td><td>copper</td><td>Granite Copper Cathodes Inc</td><td>JPN</td><td><span class="warn">escalate · dispatch</span></td><td><button class="dispatch">Dispatch…</button> <button class="settle" disabled>Settle</button></td></tr><tr><td>mo-3</td><td>MO-2026-0003</td><td>tin <span class="tag cm">3TG</span></td><td>Cedar Nonferrous Corp</td><td>JPN</td><td><span class="err">HOLD · credit-uncleared</span></td><td><button class="dispatch" disabled>Dispatch…</button> <button class="settle" disabled>Settle</button></td></tr><tr><td>mo-4</td><td>MO-2026-0004</td><td>tin <span class="tag cm">3TG</span></td><td>Delta Ores BV</td><td>JPN</td><td><span class="err">HOLD · contract-missing</span></td><td><button class="dispatch" disabled>Dispatch…</button> <button class="settle" disabled>Settle</button></td></tr><tr><td>mo-6</td><td>MO-2026-0006</td><td>gold <span class="tag cm">3TG</span></td><td>Fenwick Bullion Traders</td><td>JPN</td><td><span class="critical">HOLD · conflict-minerals-provenance-unverified</span></td><td><button class="dispatch" disabled>Dispatch…</button> <button class="settle" disabled>Settle</button></td></tr><tr><td>mo-5</td><td>MO-2026-0005</td><td>tin <span class="tag cm">3TG</span></td><td>Eagle Metals SA</td><td>JPN</td><td><span class="critical">HOLD · counterparty-sanctions-flag-unresolved</span></td><td><button class="dispatch" disabled>Dispatch…</button> <button class="settle" disabled>Settle</button></td></tr><tr><td>mo-2</td><td>MO-2026-0002</td><td>tin <span class="tag cm">3TG</span></td><td>Atlantis Metals Ltd</td><td>ATL</td><td><span class="err">HOLD · no-spec-basis</span></td><td><button class="dispatch" disabled>Dispatch…</button> <button class="settle" disabled>Settle</button></td></tr></tbody></table><p class="muted" style="margin-bottom:0">HOLD verdicts are un-overridable and never reach a human approver; <span class="warn">escalate</span> pauses for a human trading supervisor's sign-off. mo-6 (gold) and mo-7 (copper) carry the SAME unverified chain-of-custody/smelter facts — mo-6 HOLDS because gold is a conflict mineral in this actor's scope, mo-7 does not because copper is not. Settle is enabled only after an order is dispatched.</p></section></main></body></html>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>cloud-itonami · metaltrade — Operator Console</title><style>/* jp-go-digital-design-system — vendored CSS
+ * Source: https://github.com/digital-go-jp/design-system-example-components-html
+ * Upstream commit: 3b34f4c3553fa3bee90bfd8b6fe962ac3055107d — MIT License, Copyright (c) 2025 デジタル庁
+ * Generated by scripts/vendor.cljs — DO NOT EDIT BY HAND (re-vendor instead). */
+:root {
+  --color-primitive-blue-50: #e8f1fe;
+  --color-primitive-blue-100: #d9e6ff;
+  --color-primitive-blue-200: #c5d7fb;
+  --color-primitive-blue-300: #9db7f9;
+  --color-primitive-blue-400: #7096f8;
+  --color-primitive-blue-500: #4979f5;
+  --color-primitive-blue-600: #3460fb;
+  --color-primitive-blue-700: #264af4;
+  --color-primitive-blue-800: #0031d8;
+  --color-primitive-blue-900: #0017c1;
+  --color-primitive-blue-1000: #00118f;
+  --color-primitive-blue-1100: #000071;
+  --color-primitive-blue-1200: #000060;
+  --color-primitive-light-blue-50: #f0f9ff;
+  --color-primitive-light-blue-100: #dcf0ff;
+  --color-primitive-light-blue-200: #c0e4ff;
+  --color-primitive-light-blue-300: #97d3ff;
+  --color-primitive-light-blue-400: #57b8ff;
+  --color-primitive-light-blue-500: #39abff;
+  --color-primitive-light-blue-600: #008bf2;
+  --color-primitive-light-blue-700: #0877d7;
+  --color-primitive-light-blue-800: #0066be;
+  --color-primitive-light-blue-900: #0055ad;
+  --color-primitive-light-blue-1000: #00428c;
+  --color-primitive-light-blue-1100: #00316a;
+  --color-primitive-light-blue-1200: #00234b;
+  --color-primitive-cyan-50: #e9f7f9;
+  --color-primitive-cyan-100: #c8f8ff;
+  --color-primitive-cyan-200: #99f2ff;
+  --color-primitive-cyan-300: #79e2f2;
+  --color-primitive-cyan-400: #2bc8e4;
+  --color-primitive-cyan-500: #01b7d6;
+  --color-primitive-cyan-600: #00a3bf;
+  --color-primitive-cyan-700: #008da6;
+  --color-primitive-cyan-800: #008299;
+  --color-primitive-cyan-900: #006f83;
+  --color-primitive-cyan-1000: #006173;
+  --color-primitive-cyan-1100: #004c59;
+  --color-primitive-cyan-1200: #003741;
+  --color-primitive-green-50: #e6f5ec;
+  --color-primitive-green-100: #c2e5d1;
+  --color-primitive-green-200: #9bd4b5;
+  --color-primitive-green-300: #71c598;
+  --color-primitive-green-400: #51b883;
+  --color-primitive-green-500: #2cac6e;
+  --color-primitive-green-600: #259d63;
+  --color-primitive-green-700: #1d8b56;
+  --color-primitive-green-800: #197a4b;
+  --color-primitive-green-900: #115a36;
+  --color-primitive-green-1000: #0c472a;
+  --color-primitive-green-1100: #08351f;
+  --color-primitive-green-1200: #032213;
+  --color-primitive-lime-50: #ebfad9;
+  --color-primitive-lime-100: #d0f5a2;
+  --color-primitive-lime-200: #c0f354;
+  --color-primitive-lime-300: #ade830;
+  --color-primitive-lime-400: #9ddd15;
+  --color-primitive-lime-500: #8cc80c;
+  --color-primitive-lime-600: #7eb40d;
+  --color-primitive-lime-700: #6fa104;
+  --color-primitive-lime-800: #618e00;
+  --color-primitive-lime-900: #507500;
+  --color-primitive-lime-1000: #3e5a00;
+  --color-primitive-lime-1100: #2c4100;
+  --color-primitive-lime-1200: #1e2d00;
+  --color-primitive-yellow-50: #fbf5e0;
+  --color-primitive-yellow-100: #fff0b3;
+  --color-primitive-yellow-200: #ffe380;
+  --color-primitive-yellow-300: #ffd43d;
+  --color-primitive-yellow-400: #ffc700;
+  --color-primitive-yellow-500: #ebb700;
+  --color-primitive-yellow-600: #d2a400;
+  --color-primitive-yellow-700: #b78f00;
+  --color-primitive-yellow-800: #a58000;
+  --color-primitive-yellow-900: #927200;
+  --color-primitive-yellow-1000: #806300;
+  --color-primitive-yellow-1100: #6e5600;
+  --color-primitive-yellow-1200: #604b00;
+  --color-primitive-orange-50: #ffeee2;
+  --color-primitive-orange-100: #ffdfca;
+  --color-primitive-orange-200: #ffc199;
+  --color-primitive-orange-300: #ffa66d;
+  --color-primitive-orange-400: #ff8d44;
+  --color-primitive-orange-500: #ff7628;
+  --color-primitive-orange-600: #fb5b01;
+  --color-primitive-orange-700: #e25100;
+  --color-primitive-orange-800: #c74700;
+  --color-primitive-orange-900: #ac3e00;
+  --color-primitive-orange-1000: #8b3200;
+  --color-primitive-orange-1100: #6d2700;
+  --color-primitive-orange-1200: #541e00;
+  --color-primitive-red-50: #fdeeee;
+  --color-primitive-red-100: #ffdada;
+  --color-primitive-red-200: #ffbbbb;
+  --color-primitive-red-300: #ff9696;
+  --color-primitive-red-400: #ff7171;
+  --color-primitive-red-500: #ff5454;
+  --color-primitive-red-600: #fe3939;
+  --color-primitive-red-700: #fa0000;
+  --color-primitive-red-800: #ec0000;
+  --color-primitive-red-900: #ce0000;
+  --color-primitive-red-1000: #a90000;
+  --color-primitive-red-1100: #850000;
+  --color-primitive-red-1200: #620000;
+  --color-primitive-magenta-50: #f3e5f4;
+  --color-primitive-magenta-100: #ffd0ff;
+  --color-primitive-magenta-200: #ffaeff;
+  --color-primitive-magenta-300: #ff8eff;
+  --color-primitive-magenta-400: #f661f6;
+  --color-primitive-magenta-500: #f137f1;
+  --color-primitive-magenta-600: #db00db;
+  --color-primitive-magenta-700: #c000c0;
+  --color-primitive-magenta-800: #aa00aa;
+  --color-primitive-magenta-900: #8b008b;
+  --color-primitive-magenta-1000: #6c006c;
+  --color-primitive-magenta-1100: #500050;
+  --color-primitive-magenta-1200: #3b003b;
+  --color-primitive-purple-50: #f1eafa;
+  --color-primitive-purple-100: #ecddff;
+  --color-primitive-purple-200: #ddc2ff;
+  --color-primitive-purple-300: #cda6ff;
+  --color-primitive-purple-400: #bb87ff;
+  --color-primitive-purple-500: #a565f8;
+  --color-primitive-purple-600: #8843e1;
+  --color-primitive-purple-700: #6f23d0;
+  --color-primitive-purple-800: #5c10be;
+  --color-primitive-purple-900: #5109ad;
+  --color-primitive-purple-1000: #41048e;
+  --color-primitive-purple-1100: #30016c;
+  --color-primitive-purple-1200: #21004b;
+  --color-neutral-white: #ffffff;
+  --color-neutral-black: #000000;
+  --color-neutral-solid-gray-50: #f2f2f2;
+  --color-neutral-solid-gray-100: #e6e6e6;
+  --color-neutral-solid-gray-200: #cccccc;
+  --color-neutral-solid-gray-300: #b3b3b3;
+  --color-neutral-solid-gray-400: #999999;
+  --color-neutral-solid-gray-420: #949494;
+  --color-neutral-solid-gray-500: #7f7f7f;
+  --color-neutral-solid-gray-536: #767676;
+  --color-neutral-solid-gray-600: #666666;
+  --color-neutral-solid-gray-700: #4d4d4d;
+  --color-neutral-solid-gray-800: #333333;
+  --color-neutral-solid-gray-900: #1a1a1a;
+  --color-neutral-opacity-gray-50: rgba(0, 0, 0, 0.05);
+  --color-neutral-opacity-gray-100: rgba(0, 0, 0, 0.1);
+  --color-neutral-opacity-gray-200: rgba(0, 0, 0, 0.2);
+  --color-neutral-opacity-gray-300: rgba(0, 0, 0, 0.3);
+  --color-neutral-opacity-gray-400: rgba(0, 0, 0, 0.4);
+  --color-neutral-opacity-gray-420: rgba(0, 0, 0, 0.42);
+  --color-neutral-opacity-gray-500: rgba(0, 0, 0, 0.5);
+  --color-neutral-opacity-gray-536: rgba(0, 0, 0, 0.54);
+  --color-neutral-opacity-gray-600: rgba(0, 0, 0, 0.6);
+  --color-neutral-opacity-gray-700: rgba(0, 0, 0, 0.7);
+  --color-neutral-opacity-gray-800: rgba(0, 0, 0, 0.8);
+  --color-neutral-opacity-gray-900: rgba(0, 0, 0, 0.9);
+  --font-family-sans:
+    "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-mono: "Noto Sans Mono", monospace;
+  --elevation-1:
+    0 2px 8px 1px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+  --elevation-2:
+    0 2px 12px 2px rgba(0, 0, 0, 0.1), 0 1px 6px 0 rgba(0, 0, 0, 0.3);
+  --elevation-3:
+    0 4px 16px 3px rgba(0, 0, 0, 0.1), 0 1px 6px 0 rgba(0, 0, 0, 0.3);
+  --elevation-4:
+    0 6px 20px 4px rgba(0, 0, 0, 0.1), 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+  --elevation-5:
+    0 8px 24px 5px rgba(0, 0, 0, 0.1), 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+  --elevation-6:
+    0 10px 30px 6px rgba(0, 0, 0, 0.1), 0 3px 12px 0 rgba(0, 0, 0, 0.3);
+  --elevation-7:
+    0 12px 36px 7px rgba(0, 0, 0, 0.1), 0 3px 14px 0 rgba(0, 0, 0, 0.3);
+  --elevation-8:
+    0 14px 40px 7px rgba(0, 0, 0, 0.1), 0 3px 16px 0 rgba(0, 0, 0, 0.3);
+  --color-semantic-success-1: var(--color-primitive-green-600);
+  --color-semantic-success-2: var(--color-primitive-green-800);
+  --color-semantic-error-1: var(--color-primitive-red-800);
+  --color-semantic-error-2: var(--color-primitive-red-900);
+  --color-semantic-warning-yellow-1: var(--color-primitive-yellow-700);
+  --color-semantic-warning-yellow-2: var(--color-primitive-yellow-900);
+  --color-semantic-warning-orange-1: var(--color-primitive-orange-600);
+  --color-semantic-warning-orange-2: var(--color-primitive-orange-800);
+  --color-key-50: var(--color-primitive-blue-50);
+  --color-key-100: var(--color-primitive-blue-100);
+  --color-key-200: var(--color-primitive-blue-200);
+  --color-key-300: var(--color-primitive-blue-300);
+  --color-key-400: var(--color-primitive-blue-400);
+  --color-key-500: var(--color-primitive-blue-500);
+  --color-key-600: var(--color-primitive-blue-600);
+  --color-key-700: var(--color-primitive-blue-700);
+  --color-key-800: var(--color-primitive-blue-800);
+  --color-key-900: var(--color-primitive-blue-900);
+  --color-key-1000: var(--color-primitive-blue-1000);
+  --color-key-1100: var(--color-primitive-blue-1100);
+  --color-key-1200: var(--color-primitive-blue-1200);
+}
+
+html {
+  scrollbar-gutter: stable;
+  font-family: var(--font-family-sans);
+}
+
+html:has(:modal) {
+  overflow: clip;
+  scrollbar-gutter: auto;
+}
+
+body:has(:modal) {
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+
+:where(a):any-link {
+  color: var(--color-primitive-blue-1000);
+  text-decoration: underline;
+  text-decoration-thickness: calc(1 / 16 * 1rem);
+  text-underline-offset: calc(3 / 16 * 1rem);
+}
+
+:where(a):visited {
+  color: var(--color-primitive-magenta-900);
+}
+
+@media (hover: hover) {
+  :where(a):hover {
+    color: var(--color-primitive-blue-900);
+    text-decoration-thickness: calc(3 / 16 * 1rem);
+  }
+}
+
+:where(a):active {
+  color: var(--color-primitive-orange-800);
+  text-decoration-thickness: calc(1 / 16 * 1rem);
+}
+
+:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  border-radius: calc(4 / 16 * 1rem);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-u-visually-hidden {
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+:where(.dads-u-focus-outline):focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black) !important;
+  outline-offset: calc(2 / 16 * 1rem) !important;
+  border-radius: calc(4 / 16 * 1rem) !important;
+  background-color: var(--color-primitive-yellow-300) !important;
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300) !important;
+}
+
+@supports selector(:has(*)) {
+  :where(.dads-u-focus-within-outline):focus-visible,
+  :where(.dads-u-focus-within-outline):has(:focus-visible) {
+    outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black) !important;
+    outline-offset: calc(2 / 16 * 1rem) !important;
+    border-radius: calc(4 / 16 * 1rem) !important;
+    background-color: var(--color-primitive-yellow-300) !important;
+    box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300) !important;
+  }
+}
+@supports not selector(:has(*)) {
+  :where(.dads-u-focus-within-outline):focus-within {
+    outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black) !important;
+    outline-offset: calc(2 / 16 * 1rem) !important;
+    border-radius: calc(4 / 16 * 1rem) !important;
+    background-color: var(--color-primitive-yellow-300) !important;
+    box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300) !important;
+  }
+}
+
+.dads-u-dsp-64B-140 {
+  font-weight: bold !important;
+  font-size: calc(64 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dsp-57B-140 {
+  font-weight: bold !important;
+  font-size: calc(57 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dsp-48B-140 {
+  font-weight: bold !important;
+  font-size: calc(48 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dsp-64N-140 {
+  font-weight: normal !important;
+  font-size: calc(64 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dsp-57N-140 {
+  font-weight: normal !important;
+  font-size: calc(57 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dsp-48N-140 {
+  font-weight: normal !important;
+  font-size: calc(48 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-std-45B-140 {
+  font-weight: bold !important;
+  font-size: calc(45 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-std-36B-140 {
+  font-weight: bold !important;
+  font-size: calc(36 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dads-u-std-32B-150 {
+  font-weight: bold !important;
+  font-size: calc(32 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dads-u-std-28B-150 {
+  font-weight: bold !important;
+  font-size: calc(28 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dads-u-std-26B-150 {
+  font-weight: bold !important;
+  font-size: calc(26 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-24B-150 {
+  font-weight: bold !important;
+  font-size: calc(24 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-22B-150 {
+  font-weight: bold !important;
+  font-size: calc(22 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-20B-150 {
+  font-weight: bold !important;
+  font-size: calc(20 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-18B-160 {
+  font-weight: bold !important;
+  font-size: calc(18 / 16 * 1rem) !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-17B-170 {
+  font-weight: bold !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-16B-170 {
+  font-weight: bold !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-16B-175 {
+  font-weight: bold !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.75 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-45N-140 {
+  font-weight: normal !important;
+  font-size: calc(45 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-std-36N-140 {
+  font-weight: normal !important;
+  font-size: calc(36 / 16 * 1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dads-u-std-32N-150 {
+  font-weight: normal !important;
+  font-size: calc(32 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dads-u-std-28N-150 {
+  font-weight: normal !important;
+  font-size: calc(28 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dads-u-std-26N-150 {
+  font-weight: normal !important;
+  font-size: calc(26 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-24N-150 {
+  font-weight: normal !important;
+  font-size: calc(24 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-22N-150 {
+  font-weight: normal !important;
+  font-size: calc(22 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-20N-150 {
+  font-weight: normal !important;
+  font-size: calc(20 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-18N-160 {
+  font-weight: normal !important;
+  font-size: calc(18 / 16 * 1rem) !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-17N-170 {
+  font-weight: normal !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-16N-170 {
+  font-weight: normal !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-std-16N-175 {
+  font-weight: normal !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.75 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-dns-17B-130 {
+  font-weight: bold !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-17B-120 {
+  font-weight: bold !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-16B-130 {
+  font-weight: bold !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-16B-120 {
+  font-weight: bold !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-14B-130 {
+  font-weight: bold !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-14B-120 {
+  font-weight: bold !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-17N-130 {
+  font-weight: normal !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-17N-120 {
+  font-weight: normal !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-16N-130 {
+  font-weight: normal !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-16N-120 {
+  font-weight: normal !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-14N-130 {
+  font-weight: normal !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-dns-14N-120 {
+  font-weight: normal !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-oln-17B-100 {
+  font-weight: bold !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-oln-16B-100 {
+  font-weight: bold !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-oln-14B-100 {
+  font-weight: bold !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-oln-17N-100 {
+  font-weight: normal !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-oln-16N-100 {
+  font-weight: normal !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-oln-14N-100 {
+  font-weight: normal !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.dads-u-mono-17B-150 {
+  font-weight: bold !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  font-family: var(--font-family-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-mono-16B-150 {
+  font-weight: bold !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  font-family: var(--font-family-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-mono-14B-150 {
+  font-weight: bold !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  font-family: var(--font-family-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-mono-17N-150 {
+  font-weight: normal !important;
+  font-size: calc(17 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  font-family: var(--font-family-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-mono-16N-150 {
+  font-weight: normal !important;
+  font-size: calc(16 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  font-family: var(--font-family-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+.dads-u-mono-14N-150 {
+  font-weight: normal !important;
+  font-size: calc(14 / 16 * 1rem) !important;
+  line-height: 1.5 !important;
+  font-family: var(--font-family-mono) !important;
+  letter-spacing: 0 !important;
+}
+/* --- component: button --- */
+.dads-button {
+  --button-color: var(--color-key-900);
+  --button-hover-color: var(--color-key-1000);
+  --button-active-color: var(--color-key-1200);
+  --button-outline-hover-bg-color: var(--color-key-200);
+  --button-outline-active-bg-color: var(--color-key-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: calc(4 / 16 * 1rem);
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 100%;
+  font-weight: bold;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-underline-offset: calc(3 / 16 * 1rem);
+}
+
+.dads-button:disabled,
+.dads-button[aria-disabled="true"] {
+  cursor: default;
+}
+
+.dads-button[data-type="solid-fill"] {
+  border: 4px double transparent;
+  background-color: var(--button-color);
+  color: var(--color-neutral-white);
+}
+
+@media (hover: hover) {
+  .dads-button[data-type="solid-fill"]:hover {
+    background-color: var(--button-hover-color);
+    text-decoration: underline;
+    text-decoration-thickness: calc(1 / 16 * 1rem);
+  }
+}
+
+.dads-button[data-type="solid-fill"]:active {
+  background-color: var(--button-active-color);
+  text-decoration: underline;
+}
+
+.dads-button[data-type="solid-fill"]:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-button[data-type="solid-fill"]:disabled,
+.dads-button[data-type="solid-fill"][aria-disabled="true"] {
+  background-color: var(--color-neutral-solid-gray-300);
+  color: var(--color-neutral-solid-gray-50);
+  text-decoration: none;
+}
+
+@media (forced-colors: active) {
+  .dads-button[data-type="solid-fill"]:disabled,
+  .dads-button[data-type="solid-fill"][aria-disabled="true"] {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+
+.dads-button[data-type="outline"] {
+  border: 1px solid currentcolor;
+  background-color: var(--color-neutral-white);
+  color: var(--button-color);
+}
+
+@media (hover: hover) {
+  .dads-button[data-type="outline"]:hover {
+    background-color: var(--button-outline-hover-bg-color);
+    color: var(--button-hover-color);
+    text-decoration: underline;
+    text-decoration-thickness: calc(1 / 16 * 1rem);
+  }
+}
+
+.dads-button[data-type="outline"]:active {
+  background-color: var(--button-outline-active-bg-color);
+  color: var(--button-active-color);
+  text-decoration: underline;
+}
+
+.dads-button[data-type="outline"]:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-button[data-type="outline"]:disabled,
+.dads-button[data-type="outline"][aria-disabled="true"] {
+  background-color: var(--color-neutral-white);
+  color: var(--color-neutral-solid-gray-300);
+  text-decoration: none;
+}
+
+@media (forced-colors: active) {
+  .dads-button[data-type="outline"]:disabled,
+  .dads-button[data-type="outline"][aria-disabled="true"] {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+
+.dads-button[data-type="text"] {
+  border: 0;
+  background-color: transparent;
+  color: var(--button-color);
+  text-decoration: underline;
+  text-decoration-thickness: calc(1 / 16 * 1rem);
+}
+
+@media (hover: hover) {
+  .dads-button[data-type="text"]:hover {
+    background-color: var(--color-key-50);
+    color: var(--button-hover-color);
+    text-decoration-thickness: calc(3 / 16 * 1rem);
+  }
+}
+
+.dads-button[data-type="text"]:active {
+  background-color: var(--color-key-100);
+  color: var(--button-active-color);
+}
+
+.dads-button[data-type="text"]:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  background-color: var(--color-primitive-yellow-300);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-button[data-type="text"]:disabled,
+.dads-button[data-type="text"][aria-disabled="true"] {
+  background-color: transparent;
+  color: var(--color-neutral-solid-gray-300);
+  text-decoration-thickness: revert;
+}
+
+@media (forced-colors: active) {
+  .dads-button[data-type="text"]:disabled,
+  .dads-button[data-type="text"][aria-disabled="true"] {
+    color: GrayText;
+  }
+}
+
+.dads-button[data-size="lg"] {
+  min-width: calc(136 / 16 * 1rem);
+  min-height: calc(56 / 16 * 1rem);
+  border-radius: calc(8 / 16 * 1rem);
+  padding: calc(12 / 16 * 1rem) calc(16 / 16 * 1rem);
+}
+
+.dads-button[data-size="md"] {
+  min-width: calc(96 / 16 * 1rem);
+  min-height: calc(48 / 16 * 1rem);
+  border-radius: calc(8 / 16 * 1rem);
+  padding: calc(8 / 16 * 1rem) calc(16 / 16 * 1rem);
+}
+
+.dads-button[data-size="sm"] {
+  position: relative;
+  min-width: calc(80 / 16 * 1rem);
+  min-height: calc(36 / 16 * 1rem);
+  border-radius: calc(6 / 16 * 1rem);
+  padding: calc(2 / 16 * 1rem) calc(12 / 16 * 1rem);
+}
+
+.dads-button[data-size="sm"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: calc(44 / 16 * 1rem);
+}
+
+.dads-button[data-size="xs"] {
+  position: relative;
+  min-width: calc(72 / 16 * 1rem);
+  min-height: calc(28 / 16 * 1rem);
+  border-radius: calc(4 / 16 * 1rem);
+  padding: calc(2 / 16 * 1rem) calc(8 / 16 * 1rem);
+  font-size: calc(14 / 16 * 1rem);
+}
+
+.dads-button[data-size="xs"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: calc(44 / 16 * 1rem);
+}
+
+.dads-button__icon {
+  flex-shrink: 0;
+}
+/* --- component: heading --- */
+.dads-heading {
+  color: var(--color-neutral-solid-gray-800);
+  font-family: var(--font-family-sans);
+}
+
+.dads-heading[data-size="64"] {
+  --_shoulder-size: calc(28 / 16 * 1rem);
+  --_shoulder-line-height: 1.5;
+  --_shoulder-letter-spacing: 0.01em;
+  font-weight: bold;
+  font-size: calc(64 / 16 * 1rem);
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.dads-heading[data-size="57"] {
+  --_shoulder-size: calc(24 / 16 * 1rem);
+  --_shoulder-line-height: 1.5;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(57 / 16 * 1rem);
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.dads-heading[data-size="45"] {
+  --_shoulder-size: calc(22 / 16 * 1rem);
+  --_shoulder-line-height: 1.5;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(45 / 16 * 1rem);
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.dads-heading[data-size="36"] {
+  --_shoulder-size: calc(20 / 16 * 1rem);
+  --_shoulder-line-height: 1.5;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(36 / 16 * 1rem);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.dads-heading[data-size="32"] {
+  --_shoulder-size: calc(18 / 16 * 1rem);
+  --_shoulder-line-height: 1.6;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(32 / 16 * 1rem);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.dads-heading[data-size="28"] {
+  --_shoulder-size: calc(16 / 16 * 1rem);
+  --_shoulder-line-height: 1.7;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(28 / 16 * 1rem);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.dads-heading[data-size="24"] {
+  --_shoulder-size: calc(16 / 16 * 1rem);
+  --_shoulder-line-height: 1.7;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(24 / 16 * 1rem);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.dads-heading[data-size="20"] {
+  --_shoulder-size: calc(16 / 16 * 1rem);
+  --_shoulder-line-height: 1.7;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(20 / 16 * 1rem);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.dads-heading[data-size="18"] {
+  --_shoulder-size: calc(16 / 16 * 1rem);
+  --_shoulder-line-height: 1.7;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(18 / 16 * 1rem);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+.dads-heading[data-size="16"] {
+  --_shoulder-size: calc(16 / 16 * 1rem);
+  --_shoulder-line-height: 1.7;
+  --_shoulder-letter-spacing: 0.02em;
+  font-weight: bold;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+}
+
+.dads-heading[data-chip] {
+  position: relative;
+  padding-left: calc(1em / 3 + 0.5em);
+}
+
+.dads-heading[data-chip]::before {
+  position: absolute;
+  top: 0.2em;
+  bottom: 0.1em;
+  left: 0;
+  width: calc(1em / 3);
+  background-color: var(--color-key-900);
+  content: "";
+}
+
+@supports (top: 1lh) {
+  .dads-heading[data-chip]::before {
+    top: calc(0.5lh - 0.45em);
+    bottom: calc(0.5lh - 0.55em);
+  }
+}
+
+.dads-heading[data-chip]:has(.dads-heading__shoulder)::before {
+  top: calc((var(--_shoulder-size) * (var(--_shoulder-line-height) - 1)) / 2);
+}
+
+@media (forced-colors: active) {
+  .dads-heading[data-chip]::before {
+    background-color: CanvasText;
+  }
+}
+
+.dads-heading[data-rule] {
+  border-bottom: solid var(--color-key-900);
+}
+
+.dads-heading[data-rule="8"] {
+  border-bottom-width: calc(8 / 16 * 1rem);
+  padding-bottom: calc(32 / 16 * 1rem);
+}
+
+.dads-heading[data-rule="6"] {
+  border-bottom-width: calc(6 / 16 * 1rem);
+  padding-bottom: calc(24 / 16 * 1rem);
+}
+
+.dads-heading[data-rule="4"] {
+  border-bottom-width: calc(4 / 16 * 1rem);
+  padding-bottom: calc(16 / 16 * 1rem);
+}
+
+.dads-heading[data-rule="2"] {
+  border-bottom-width: calc(2 / 16 * 1rem);
+  padding-bottom: calc(8 / 16 * 1rem);
+}
+
+.dads-heading__shoulder {
+  margin: 0;
+  font-weight: bold;
+  font-size: var(--_shoulder-size);
+  line-height: var(--_shoulder-line-height);
+  letter-spacing: var(--_shoulder-letter-spacing);
+}
+
+.dads-heading__heading {
+  margin: 0;
+  font: inherit;
+}
+
+.dads-heading__icon {
+  margin-right: calc(0.4em - 0.25em);
+}
+
+.dads-heading__icon::after {
+  content: " ";
+}
+
+.dads-heading__icon-svg {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: -0.25em;
+}
+/* --- component: accordion --- */
+.dads-accordion {
+  --_icon-size: calc(20 / 16 * 1rem);
+  border-bottom: 1px solid var(--color-neutral-solid-gray-420);
+}
+
+@media (min-width: 48rem) {
+  .dads-accordion {
+    --_icon-size: calc(32 / 16 * 1rem);
+  }
+}
+
+.dads-accordion__summary {
+  position: relative;
+  display: block;
+  padding: calc(8 / 16 * 1rem) calc(8 / 16 * 1rem) calc(8 / 16 * 1rem)
+    calc(var(--_icon-size) + 0.75rem);
+  color: var(--color-neutral-solid-gray-800);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1.7;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+  cursor: default;
+}
+
+.dads-accordion__summary::marker {
+  content: "";
+}
+
+.dads-accordion__summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .dads-accordion__summary {
+    padding: calc(16 / 16 * 1rem) calc(16 / 16 * 1rem) calc(16 / 16 * 1rem)
+      calc(var(--_icon-size) + calc(20 / 16 * 1rem));
+    font-size: calc(18 / 16 * 1rem);
+    line-height: 1.6;
+  }
+}
+
+@media (hover: hover) {
+  .dads-accordion__summary:hover:not(:focus-visible) {
+    background-color: var(--color-neutral-solid-gray-50);
+  }
+}
+
+.dads-accordion__summary:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  border-radius: calc(4 / 16 * 1rem);
+  background-color: var(--color-primitive-yellow-300);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-accordion__icon {
+  position: absolute;
+  top: calc(8 / 16 * 1rem);
+  left: calc(2 / 16 * 1rem);
+  margin-top: calc((1lh - var(--_icon-size)) / 2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  border-radius: 50%;
+  border: 1px solid currentcolor;
+  background-color: var(--color-neutral-white);
+  color: var(--color-key-1000);
+}
+
+@media (min-width: 48rem) {
+  .dads-accordion__icon {
+    top: calc(14 / 16 * 1rem);
+    left: calc(6 / 16 * 1rem);
+  }
+}
+
+.dads-accordion[open] .dads-accordion__icon {
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) {
+  .dads-accordion__summary:hover .dads-accordion__icon {
+    outline: calc(2 / 16 * 1rem) solid currentcolor;
+  }
+}
+
+.dads-accordion__icon-svg {
+  margin-top: calc(2 / 16 * 1rem);
+  width: calc(16 / 16 * 1rem);
+  height: calc(16 / 16 * 1rem);
+  pointer-events: none;
+}
+
+@media (min-width: 48rem) {
+  .dads-accordion__icon-svg {
+    width: auto;
+    height: auto;
+  }
+}
+
+.dads-accordion__summary :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  font: inherit;
+}
+
+.dads-accordion__content {
+  padding: calc(16 / 16 * 1rem) calc(8 / 16 * 1rem) calc(16 / 16 * 1rem)
+    calc(var(--_icon-size) + 0.75rem);
+}
+
+@media (min-width: 48rem) {
+  .dads-accordion__content {
+    padding: calc(24 / 16 * 1rem) calc(16 / 16 * 1rem) calc(24 / 16 * 1rem)
+      calc(var(--_icon-size) + 1.25rem);
+  }
+}
+
+.dads-accordion__back-link:any-link {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(6 / 16 * 1rem);
+  width: fit-content;
+  color: var(--color-primitive-blue-1000);
+  text-decoration: underline;
+  text-decoration-thickness: calc(1 / 16 * 1rem);
+  text-underline-offset: calc(3 / 16 * 1rem);
+  text-spacing-trim: trim-start;
+}
+
+@media (hover: hover) {
+  .dads-accordion__back-link:hover {
+    color: var(--color-primitive-blue-900);
+    text-decoration-thickness: calc(3 / 16 * 1rem);
+  }
+}
+
+.dads-accordion__back-link:active {
+  color: var(--color-primitive-orange-800);
+  text-decoration-thickness: calc(1 / 16 * 1rem);
+}
+
+.dads-accordion__back-link:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  border-radius: calc(4 / 16 * 1rem);
+  background-color: var(--color-primitive-yellow-300);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-accordion__back-link-icon {
+  margin-top: calc((1lh - 24 / 16 * 1rem) / 2);
+  flex-shrink: 0;
+}
+/* --- component: input-text --- */
+.dads-input-text {
+  display: block;
+  color: var(--color-neutral-solid-gray-800);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1.7;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+}
+
+.dads-input-text__input {
+  box-sizing: border-box;
+  max-width: 100%;
+  border: 1px solid var(--color-neutral-solid-gray-600);
+  background-color: var(--color-neutral-white);
+  padding: calc(12 / 16 * 1rem) calc(16 / 16 * 1rem);
+  border-radius: calc(8 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-900);
+  font: inherit;
+  line-height: 1;
+}
+
+.dads-input-text__input[data-size="sm"] {
+  height: 2.5rem;
+}
+
+.dads-input-text__input[data-size="md"] {
+  height: 3rem;
+}
+
+.dads-input-text__input[data-size="lg"] {
+  height: 3.5rem;
+}
+
+.dads-input-text__input:read-only:not(:disabled) {
+  border-style: dashed;
+}
+
+.dads-input-text__input:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+@media (hover: hover) {
+  .dads-input-text__input:not(:read-only):hover {
+    border-color: var(--color-neutral-black);
+  }
+}
+
+.dads-input-text__input:is(:user-invalid, [aria-invalid="true"]) {
+  border-color: var(--color-semantic-error-1);
+}
+
+@media (hover: hover) {
+  .dads-input-text__input:is(:user-invalid, [aria-invalid="true"]):hover {
+    border-color: var(--color-primitive-red-1000);
+  }
+}
+
+.dads-input-text__input:is(:disabled, [aria-disabled="true"]),
+.dads-input-text__input:is(:disabled, [aria-disabled="true"]):hover {
+  border-color: var(--color-neutral-solid-gray-300);
+  background-color: var(--color-neutral-solid-gray-50);
+  color: var(--color-neutral-solid-gray-420);
+}
+
+@media (forced-colors: active) {
+  .dads-input-text__input[aria-disabled="true"],
+  .dads-input-text__input[aria-disabled="true"]:hover {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+
+.dads-input-text__error-text {
+  margin: calc(8 / 16 * 1rem) 0 0 0;
+  display: block;
+  color: var(--color-semantic-error-1);
+}
+/* --- component: textarea --- */
+.dads-textarea {
+  display: block;
+  color: var(--color-neutral-solid-gray-800);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1.7;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+}
+
+.dads-textarea__textarea {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  border: 1px solid var(--color-neutral-solid-gray-600);
+  background-color: var(--color-neutral-white);
+  padding: calc(16 / 16 * 1rem);
+  border-radius: calc(8 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-900);
+  font: inherit;
+  resize: vertical;
+}
+
+.dads-textarea__textarea:read-only:not(:disabled) {
+  border-style: dashed;
+}
+
+.dads-textarea__textarea:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+@media (hover: hover) {
+  .dads-textarea__textarea:not(:read-only):hover {
+    border-color: var(--color-neutral-black);
+  }
+}
+
+.dads-textarea__textarea:is(:user-invalid, [aria-invalid="true"]) {
+  border-color: var(--color-semantic-error-1);
+}
+
+@media (hover: hover) {
+  .dads-textarea__textarea:is(:user-invalid, [aria-invalid="true"]):hover {
+    border-color: var(--color-primitive-red-1000);
+  }
+}
+
+.dads-textarea__textarea:is(:disabled, [aria-disabled="true"]),
+.dads-textarea__textarea:is(:disabled, [aria-disabled="true"]):hover {
+  border-color: var(--color-neutral-solid-gray-300);
+  background-color: var(--color-neutral-solid-gray-50);
+  color: var(--color-neutral-solid-gray-420);
+  resize: none;
+}
+
+@media (forced-colors: active) {
+  .dads-textarea__textarea[aria-disabled="true"],
+  .dads-textarea__textarea[aria-disabled="true"]:hover {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+
+.dads-textarea__error-text {
+  margin: calc(8 / 16 * 1rem) 0 0 0;
+  display: block;
+  color: var(--color-semantic-error-1);
+}
+
+.dads-textarea__counter {
+  display: block;
+  margin-top: calc(8 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-600);
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.dads-textarea__counter[data-exceeded] {
+  color: var(--color-semantic-error-1);
+}
+/* --- component: checkbox --- */
+.dads-checkbox {
+  display: flex;
+  align-items: start;
+  gap: var(--_gap);
+  width: fit-content;
+}
+
+.dads-checkbox:has(.dads-checkbox__label:not(:empty)) {
+  padding-top: calc(8 / 16 * 1rem);
+  padding-bottom: calc(8 / 16 * 1rem);
+}
+
+.dads-checkbox[data-size="sm"] {
+  --_gap: calc(4 / 16 * 1rem);
+  --_checkbox-size: calc(24 / 16 * 1rem);
+  --_checkbox-border-width: calc(2 / 16 * 1rem);
+  --_checkbox-scale: 1;
+  --_label-padding-top: calc(1 / 16 * 1rem);
+  --_label-font-size: calc(16 / 16 * 1rem);
+}
+
+.dads-checkbox[data-size="md"] {
+  --_gap: calc(8 / 16 * 1rem);
+  --_checkbox-size: calc(32 / 16 * 1rem);
+  --_checkbox-border-width: calc(2 / 16 * 1rem);
+  --_checkbox-scale: calc(20 / 14);
+  --_label-padding-top: calc(4 / 16 * 1rem);
+  --_label-font-size: calc(16 / 16 * 1rem);
+}
+
+.dads-checkbox[data-size="lg"] {
+  --_gap: calc(8 / 16 * 1rem);
+  --_checkbox-size: calc(44 / 16 * 1rem);
+  --_checkbox-border-width: calc(3 / 16 * 1rem);
+  --_checkbox-scale: calc(27 / 14);
+  --_label-padding-top: calc(10 / 16 * 1rem);
+  --_label-font-size: calc(17 / 16 * 1rem);
+}
+
+.dads-checkbox__checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: var(--_checkbox-size);
+  height: var(--_checkbox-size);
+  border-radius: 12.5%;
+}
+
+@media (hover: hover) {
+  .dads-checkbox__checkbox:has(
+    :not(:focus, :disabled, [aria-disabled="true"]):hover
+  ) {
+    background-color: var(--color-neutral-solid-gray-420);
+  }
+}
+
+.dads-checkbox__input {
+  --_base-color: var(--color-neutral-white);
+  --_accent-color: var(--color-key-900);
+  --_accent-hover-color: var(--color-key-1100);
+  --_border-color: var(--color-neutral-solid-gray-600);
+  --_border-hover-color: var(--color-neutral-black);
+  --_check-color: var(--color-neutral-white);
+
+  margin: 0;
+  appearance: none;
+  width: 75%;
+  height: 75%;
+  border-radius: calc(2 / 18 * 100%);
+  background-color: var(--_base-color);
+  background-clip: padding-box;
+  border: var(--_checkbox-border-width) solid var(--_border-color);
+}
+
+.dads-checkbox__input:focus {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+@media (hover: hover) {
+  .dads-checkbox__input:not(:disabled, [aria-disabled="true"]):hover {
+    border-color: var(--_border-hover-color);
+  }
+}
+
+.dads-checkbox__input:is(:checked, :indeterminate) {
+  border-color: var(--_accent-color);
+  background-color: var(--_accent-color);
+}
+
+@media (hover: hover) {
+  .dads-checkbox__input:is(:checked, :indeterminate):not(
+    :disabled,
+    [aria-disabled="true"]
+  ):hover {
+    border-color: var(--_accent-hover-color);
+    background-color: var(--_accent-hover-color);
+  }
+}
+
+.dads-checkbox__input::before {
+  display: none;
+  width: calc(14 / 16 * 1rem);
+  height: calc(14 / 16 * 1rem);
+  background-color: var(--_check-color);
+  transform-origin: left top;
+  transform: scale(var(--_checkbox-scale, 1));
+  content: "";
+}
+
+.dads-checkbox__input:checked::before {
+  display: block;
+  clip-path: path(
+    "M5.6,11.2L12.65,4.15L11.25,2.75L5.6,8.4L2.75,5.55L1.35,6.95L5.6,11.2Z"
+  );
+}
+
+.dads-checkbox__input:indeterminate::before {
+  display: block;
+  clip-path: path("M2,6h10v2H2Z");
+}
+
+.dads-checkbox__input[aria-invalid="true"] {
+  --_accent-color: var(--color-semantic-error-1);
+  --_accent-hover-color: var(--color-primitive-red-1000);
+  --_border-color: var(--color-semantic-error-1);
+  --_border-hover-color: var(--color-primitive-red-1000);
+}
+
+.dads-checkbox__input:is(:disabled, [aria-disabled="true"]) {
+  --_base-color: var(--color-neutral-solid-gray-50);
+  --_accent-color: var(--color-neutral-solid-gray-300);
+  --_accent-hover-color: var(--color-neutral-solid-gray-300);
+  --_border-color: var(--color-neutral-solid-gray-300);
+  --_border-hover-color: var(--color-neutral-solid-gray-300);
+}
+
+@media (forced-colors: active) {
+  .dads-checkbox__input,
+  .dads-checkbox__input[aria-invalid="true"] {
+    --_accent-color: Highlight;
+    --_accent-hover-color: Highlight;
+    --_border-color: ButtonText;
+    --_border-hover-color: ButtonText;
+    --_check-color: HighlightText;
+  }
+
+  .dads-checkbox__input:is(:disabled, [aria-disabled="true"]) {
+    --_accent-color: GrayText;
+    --_accent-hover-color: GrayText;
+    --_border-color: GrayText;
+    --_border-hover-color: GrayText;
+    --_check-color: Canvas;
+  }
+}
+
+.dads-checkbox__label {
+  padding-top: var(--_label-padding-top);
+  color: var(--color-neutral-solid-gray-800);
+  font-weight: normal;
+  font-size: var(--_label-font-size);
+  line-height: 1.3;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0;
+}
+/* --- component: form-control-label --- */
+.dads-form-control-label {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  padding: 0;
+  color: var(--color-neutral-solid-gray-800);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1.7;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+}
+
+.dads-form-control-label[data-size="sm"] {
+  gap: calc(4 / 16 * 1rem);
+}
+
+.dads-form-control-label[data-size="md"] {
+  gap: calc(8 / 16 * 1rem);
+}
+
+.dads-form-control-label[data-size="lg"] {
+  gap: calc(8 / 16 * 1rem);
+}
+
+.dads-form-control-label__label {
+  align-self: start;
+  padding: 0;
+  font-weight: bold;
+}
+
+.dads-form-control-label[data-size="sm"] .dads-form-control-label__label {
+  font-size: calc(16 / 16 * 1rem);
+}
+
+.dads-form-control-label[data-size="md"] .dads-form-control-label__label {
+  font-size: calc(17 / 16 * 1rem);
+}
+
+.dads-form-control-label[data-size="lg"] .dads-form-control-label__label {
+  font-size: calc(18 / 16 * 1rem);
+}
+
+legend.dads-form-control-label__label {
+  margin-bottom: calc(8 / 16 * 1rem);
+  float: none;
+}
+
+.dads-form-control-label__requirement {
+  margin-left: calc(4 / 16 * 1rem);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+}
+
+.dads-form-control-label__requirement[data-required="true"] {
+  color: var(--color-semantic-error-1);
+}
+
+.dads-form-control-label__requirement::before {
+  content: " ";
+}
+
+.dads-form-control-label__status {
+  margin-left: calc(4 / 16 * 1rem);
+  display: inline-block;
+  outline: 1px solid transparent;
+  border-radius: calc(8 / 16 * 1rem);
+  background-color: var(--color-neutral-solid-gray-536);
+  padding: calc(8 / 16 * 1rem);
+  color: var(--color-neutral-white);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.dads-form-control-label__support-text {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--color-neutral-solid-gray-600);
+}
+
+.dads-form-control-label__error-text {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--color-semantic-error-1);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+/* --- component: table --- */
+.dads-table {
+  --_border-color: var(--color-neutral-solid-gray-420);
+  --_padding: calc(20 / 16 * 1rem) calc(16 / 16 * 1rem);
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: calc(16 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-800);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1.7;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+}
+
+.dads-table[data-size="dense"] {
+  --_padding: calc(12 / 16 * 1rem) calc(16 / 16 * 1rem);
+  line-height: 1.3;
+}
+
+.dads-table__caption {
+  font-weight: bold;
+  font-size: calc(17 / 16 * 1rem);
+}
+
+.dads-table__table {
+  border-collapse: collapse;
+}
+
+.dads-table__table :is(td, th) {
+  padding: var(--_padding);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.dads-table__table th {
+  font-weight: bold;
+}
+
+.dads-table__col-header {
+  --_border-color: var(--color-neutral-solid-gray-500);
+  background-color: var(--color-neutral-solid-gray-100);
+  color: var(--color-neutral-solid-gray-900);
+}
+
+.dads-table__row-header {
+  --_border-color: var(--color-neutral-solid-gray-500);
+  background-color: var(--color-neutral-solid-gray-100);
+  color: var(--color-neutral-solid-gray-900);
+}
+
+/* Stripe */
+
+.dads-table[data-row-stripe] {
+  --_border-color: var(--color-neutral-solid-gray-500);
+}
+
+.dads-table[data-row-stripe] tr:nth-child(even) {
+  background-color: var(--color-neutral-solid-gray-50);
+}
+
+/* Hover highlight */
+
+.dads-table[data-row-hover-highlight] {
+  --_border-color: var(--color-neutral-solid-gray-500);
+}
+
+@media (hover: hover) {
+  .dads-table[data-row-hover-highlight] tr:hover {
+    background-color: var(--color-key-50);
+  }
+}
+
+/* With checkbox */
+
+.dads-table[data-selectable] {
+  --_border-color: var(--color-neutral-solid-gray-500);
+}
+
+.dads-table[data-selectable] tr:has(:checked) :where(td, th) {
+  background:
+    linear-gradient(#fff, #fff) top / 100% 1px no-repeat,
+    linear-gradient(90deg, #fff, #fff) left / var(--_gap-x, 0) 100% no-repeat,
+    var(--color-key-100);
+  background-origin: padding-box;
+}
+
+.dads-table [data-border=""] :is(td, th):first-child,
+.dads-table [data-border~="left"] :is(td, th):first-child,
+.dads-table [data-cell-border=""] :is(td, th),
+.dads-table [data-cell-border~="left"] :is(td, th),
+.dads-table [data-cell-border~="right"] :is(td, th) + :is(td, th),
+.dads-table [data-border=""]:is(td, th),
+.dads-table [data-border~="left"]:is(td, th),
+.dads-table [data-border=""] + :is(td, th),
+.dads-table [data-border~="right"] + :is(td, th) {
+  --_gap-x: 1px;
+}
+
+@supports (selector(:has(.x))) {
+  .dads-table td:has(.dads-checkbox:only-child, .dads-radio:only-child),
+  .dads-table th:has(.dads-checkbox:only-child, .dads-radio:only-child) {
+    position: relative;
+    box-sizing: border-box;
+    width: calc(40 / 16 * 1rem);
+    padding: 0;
+  }
+
+  .dads-table td > :is(.dads-checkbox:only-child, .dads-radio:only-child),
+  .dads-table th > :is(.dads-checkbox:only-child, .dads-radio:only-child) {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    justify-content: center;
+    width: auto;
+    padding-top: calc(10 / 16 * 1rem);
+  }
+}
+
+/* Sort and action */
+
+.dads-table__sort-header {
+  --_border-color: var(--color-neutral-solid-gray-500);
+  background-color: var(--color-neutral-solid-gray-100);
+  padding: calc(12 / 16 * 1rem) calc(16 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-900);
+}
+
+.dads-table[data-size="dense"] .dads-table__sort-header {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.dads-table__sort-inner {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  column-gap: calc(4 / 16 * 1rem);
+}
+
+.dads-table__sort-label {
+  display: flex;
+  align-items: start;
+  gap: calc(4 / 16 * 1rem);
+  padding-top: calc(8 / 16 * 1rem);
+  padding-bottom: calc(8 / 16 * 1rem);
+}
+
+.dads-table[data-size="dense"] .dads-table__sort-label {
+  padding-top: calc(11 / 16 * 1rem);
+  padding-bottom: calc(11 / 16 * 1rem);
+}
+
+.dads-table__sort-button {
+  display: inline-flex;
+  align-items: start;
+  column-gap: calc(4 / 16 * 1rem);
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  letter-spacing: inherit;
+  text-decoration: underline;
+  text-underline-offset: calc(3 / 16 * 1rem);
+}
+
+.dads-table__sort-button:hover {
+  text-decoration-thickness: calc(3 / 16 * 1rem);
+}
+
+.dads-table__sort-button:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  border-radius: calc(4 / 16 * 1rem);
+  background-color: var(--color-primitive-yellow-300);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-table__sort-icon {
+  flex-shrink: 0;
+  padding-top: calc(2 / 16 * 1rem);
+}
+
+.dads-table[data-size="dense"] .dads-table__sort-icon {
+  margin-top: calc(-2 / 16 * 1rem);
+  padding-top: 0;
+}
+
+.dads-table__sort-svg {
+  display: block;
+  width: calc(24 / 16 * 1rem);
+  height: calc(24 / 16 * 1rem);
+}
+
+.dads-table__action {
+  margin-right: calc(-16 / 16 * 1rem);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(44 / 16 * 1rem);
+  height: calc(44 / 16 * 1rem);
+  border-radius: calc(4 / 16 * 1rem);
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.dads-table__action:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  border-radius: calc(4 / 16 * 1rem);
+  background-color: var(--color-primitive-yellow-300);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-table__action-svg {
+  display: block;
+  width: calc(24 / 16 * 1rem);
+  height: calc(24 / 16 * 1rem);
+}
+
+/* Utilities */
+
+.dads-table [data-width="full"] {
+  width: 100%;
+}
+
+.dads-table [data-layout="fixed"] {
+  table-layout: fixed;
+}
+
+.dads-table [data-cell-border=""] :where(td, th) {
+  border: 1px solid var(--_border-color);
+}
+
+.dads-table [data-cell-border~="top"] :where(td, th) {
+  border-top: 1px solid var(--_border-color);
+}
+
+.dads-table [data-cell-border~="right"] :where(td, th) {
+  border-right: 1px solid var(--_border-color);
+}
+
+.dads-table [data-cell-border~="bottom"] :where(td, th) {
+  border-bottom: 1px solid var(--_border-color);
+}
+
+.dads-table [data-cell-border~="left"] :where(td, th) {
+  border-left: 1px solid var(--_border-color);
+}
+
+/* Header cell's black border should take precedence over [data-cell-border] */
+:last-of-type > .dads-table__col-header,
+:last-of-type > .dads-table__sort-header {
+  border-bottom: 1px solid var(--color-neutral-black);
+}
+.dads-table__row-header:last-of-type {
+  border-right: 1px solid var(--color-neutral-black);
+}
+
+.dads-table [data-border=""] {
+  border: 1px solid var(--_border-color);
+}
+
+.dads-table [data-border~="top"] {
+  border-top: 1px solid var(--_border-color);
+}
+
+.dads-table [data-border~="right"] {
+  border-right: 1px solid var(--_border-color);
+}
+
+.dads-table [data-border~="bottom"] {
+  border-bottom: 1px solid var(--_border-color);
+}
+
+.dads-table [data-border~="left"] {
+  border-left: 1px solid var(--_border-color);
+}
+
+.dads-table [data-border="hidden"] {
+  border-style: hidden;
+}
+
+.dads-table [data-border~="top-hidden"] {
+  border-top-style: hidden;
+}
+
+.dads-table [data-border~="right-hidden"] {
+  border-right-style: hidden;
+}
+
+.dads-table [data-border~="bottom-hidden"] {
+  border-bottom-style: hidden;
+}
+
+.dads-table [data-border~="left-hidden"] {
+  border-left-style: hidden;
+}
+
+.dads-table [data-bg="white"] {
+  background-color: var(--color-neutral-white);
+}
+
+.dads-table [data-bg="solid-gray-50"] {
+  --_border-color: var(--color-neutral-solid-gray-500);
+  background-color: var(--color-neutral-solid-gray-50);
+}
+
+.dads-table [data-bg="solid-gray-100"] {
+  --_border-color: var(--color-neutral-solid-gray-500);
+  background-color: var(--color-neutral-solid-gray-100);
+}
+
+.dads-table [data-bg="transparent"] {
+  background-color: transparent;
+}
+/* --- component: chip-label --- */
+.dads-chip-label {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  align-content: center;
+  box-sizing: border-box;
+  min-height: calc(32 / 16 * 1rem);
+  border-radius: calc(8 / 16 * 1rem);
+  padding: calc(3 / 16 * 1rem) calc(7 / 16 * 1rem);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
+}
+
+.dads-chip-label[data-style="text"] {
+  padding: calc(4 / 16 * 1rem) calc(8 / 16 * 1rem);
+  color: var(--_text, #000);
+}
+
+.dads-chip-label[data-style="outlined"] {
+  border: 1px solid var(--_non-text, #000);
+  background-color: var(--color-neutral-white);
+  color: var(--_text, #000);
+}
+
+.dads-chip-label[data-style="filled-1"] {
+  border: 1px solid var(--_non-text, #000);
+  background-color: var(--_bg, #eee);
+  color: var(--_text-dark, #000);
+}
+
+.dads-chip-label[data-style="filled-2"] {
+  border: 1px solid transparent;
+  background-color: var(--_non-text, #000);
+  color: var(--color-neutral-white, #fff);
+}
+
+.dads-chip-label[data-color="gray"] {
+  --_non-text: var(--color-neutral-solid-gray-700);
+  --_bg: var(--color-neutral-solid-gray-50);
+  --_text: var(--color-neutral-solid-gray-800);
+  --_text-dark: var(--color-neutral-solid-gray-800);
+}
+
+.dads-chip-label[data-color="blue"] {
+  --_non-text: var(--color-primitive-blue-700);
+  --_bg: var(--color-primitive-blue-50);
+  --_text: var(--color-primitive-blue-700);
+  --_text-dark: var(--color-primitive-blue-800);
+}
+
+.dads-chip-label[data-color="light-blue"] {
+  --_non-text: var(--color-primitive-light-blue-800);
+  --_bg: var(--color-primitive-light-blue-50);
+  --_text: var(--color-primitive-light-blue-800);
+  --_text-dark: var(--color-primitive-light-blue-900);
+}
+
+.dads-chip-label[data-color="cyan"] {
+  --_non-text: var(--color-primitive-cyan-900);
+  --_bg: var(--color-primitive-cyan-50);
+  --_text: var(--color-primitive-cyan-900);
+  --_text-dark: var(--color-primitive-cyan-1000);
+}
+
+.dads-chip-label[data-color="green"] {
+  --_non-text: var(--color-primitive-green-800);
+  --_bg: var(--color-primitive-green-50);
+  --_text: var(--color-primitive-green-800);
+  --_text-dark: var(--color-primitive-green-900);
+}
+
+.dads-chip-label[data-color="lime"] {
+  --_non-text: var(--color-primitive-lime-900);
+  --_bg: var(--color-primitive-lime-50);
+  --_text: var(--color-primitive-lime-900);
+  --_text-dark: var(--color-primitive-lime-1000);
+}
+
+.dads-chip-label[data-color="yellow"] {
+  --_non-text: var(--color-primitive-yellow-1000);
+  --_bg: var(--color-primitive-yellow-50);
+  --_text: var(--color-primitive-yellow-1000);
+  --_text-dark: var(--color-primitive-yellow-1100);
+}
+
+.dads-chip-label[data-color="orange"] {
+  --_non-text: var(--color-primitive-orange-900);
+  --_bg: var(--color-primitive-orange-50);
+  --_text: var(--color-primitive-orange-900);
+  --_text-dark: var(--color-primitive-orange-1000);
+}
+
+.dads-chip-label[data-color="red"] {
+  --_non-text: var(--color-primitive-red-900);
+  --_bg: var(--color-primitive-red-50);
+  --_text: var(--color-primitive-red-900);
+  --_text-dark: var(--color-primitive-red-1000);
+}
+
+.dads-chip-label[data-color="magenta"] {
+  --_non-text: var(--color-primitive-magenta-800);
+  --_bg: var(--color-primitive-magenta-50);
+  --_text: var(--color-primitive-magenta-800);
+  --_text-dark: var(--color-primitive-magenta-900);
+}
+
+.dads-chip-label[data-color="purple"] {
+  --_non-text: var(--color-primitive-purple-800);
+  --_bg: var(--color-primitive-purple-50);
+  --_text: var(--color-primitive-purple-800);
+  --_text-dark: var(--color-primitive-purple-800);
+}
+
+.dads-chip-label__icon {
+  --_icon-size: calc(24 / 16 * 1rem);
+  --_offset: calc((var(--_icon-size) - 1cap) / 2);
+  position: relative;
+  top: var(--_offset);
+  margin-top: calc(-1 * var(--_offset));
+  margin-right: calc(4 / 16 * 1rem);
+  margin-bottom: var(--_offset);
+  flex-shrink: 0;
+}
+
+@media (forced-colors: active) {
+  .dads-chip-label__icon {
+    fill: CanvasText;
+  }
+}
+
+.dads-chip-label[data-style="filled-1"] .dads-chip-label__icon {
+  color: var(--_non-text, #000);
+}
+/* --- component: divider --- */
+.dads-divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid;
+  opacity: 1;
+}
+
+.dads-divider[data-color="solid-gray-420"] {
+  border-top-color: var(--color-neutral-solid-gray-420);
+}
+
+.dads-divider[data-color="solid-gray-536"] {
+  border-top-color: var(--color-neutral-solid-gray-536);
+}
+
+.dads-divider[data-color="black"] {
+  border-top-color: var(--color-neutral-black);
+}
+
+.dads-divider[data-style="solid"] {
+  border-top-style: solid;
+}
+
+.dads-divider[data-style="dashed"] {
+  border-top-style: dashed;
+}
+
+.dads-divider[data-width="1"] {
+  border-top-width: 1px;
+}
+
+.dads-divider[data-width="2"] {
+  border-top-width: 2px;
+}
+
+.dads-divider[data-width="3"] {
+  border-top-width: 3px;
+}
+
+.dads-divider[data-width="4"] {
+  border-top-width: 4px;
+}
+/* --- component: notification-banner --- */
+.dads-notification-banner {
+  --_base-color: var(--color-primitive-blue-900);
+  --_color-chip-color: var(--color-primitive-blue-900);
+  display: grid;
+  grid-template-columns: calc(24 / 16 * 1rem) 1fr auto;
+  grid-template-rows: minmax(calc(36 / 16 * 1rem), auto);
+  border: solid var(--_base-color);
+  background-color: var(--color-neutral-white);
+  padding-top: calc(8 / 16 * 1rem);
+  padding-right: calc(16 / 16 * 1rem);
+  padding-bottom: calc(24 / 16 * 1rem);
+  padding-left: calc(16 / 16 * 1rem);
+  gap: calc(16 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-800);
+  font-weight: normal;
+  font-size: calc(16 / 16 * 1rem);
+  line-height: 1.7;
+  font-family: var(--font-family-sans);
+  letter-spacing: 0.02em;
+}
+
+.dads-notification-banner[data-style="standard"] {
+  border-radius: calc(12 / 16 * 1rem);
+  border-width: calc(3 / 16 * 1rem);
+}
+
+.dads-notification-banner[data-style="color-chip"] {
+  border-width: calc(2 / 16 * 1rem);
+  padding-left: calc(24 / 16 * 1rem);
+  box-shadow: inset calc(8 / 16 * 1rem) 0 0 0 var(--_color-chip-color);
+}
+
+@media (min-width: 48rem) {
+  .dads-notification-banner {
+    grid-template-columns: calc(36 / 16 * 1rem) 1fr auto;
+    padding-top: calc(24 / 16 * 1rem);
+    padding-right: calc(24 / 16 * 1rem);
+    padding-bottom: calc(32 / 16 * 1rem);
+    padding-left: calc(24 / 16 * 1rem);
+    column-gap: calc(24 / 16 * 1rem);
+  }
+
+  .dads-notification-banner[data-style="color-chip"] {
+    padding-left: calc(40 / 16 * 1rem);
+    box-shadow: inset calc(16 / 16 * 1rem) 0 0 0 var(--_color-chip-color);
+  }
+}
+
+.dads-notification-banner[data-type="success"] {
+  --_base-color: var(--color-semantic-success-2);
+  --_color-chip-color: var(--color-semantic-success-2);
+}
+
+.dads-notification-banner[data-type="error"] {
+  --_base-color: var(--color-semantic-error-1);
+  --_color-chip-color: var(--color-semantic-error-1);
+}
+
+.dads-notification-banner[data-type="warning"] {
+  --_base-color: var(--color-semantic-warning-yellow-2);
+  --_color-chip-color: var(--color-primitive-yellow-400);
+}
+
+.dads-notification-banner[data-type="info-1"] {
+  --_base-color: var(--color-primitive-blue-900);
+  --_color-chip-color: var(--color-primitive-blue-900);
+}
+
+.dads-notification-banner[data-type="info-2"] {
+  --_base-color: var(--color-neutral-solid-gray-536);
+  --_color-chip-color: var(--color-neutral-solid-gray-536);
+}
+
+.dads-notification-banner__icon {
+  justify-self: center;
+  width: calc(28 / 16 * 1rem);
+  height: calc(28 / 16 * 1rem);
+  max-width: none;
+  max-height: none;
+  padding-top: calc(3 / 16 * 1rem);
+  color: var(--_base-color);
+}
+
+@media (min-width: 48rem) {
+  .dads-notification-banner__icon {
+    margin-top: calc(-4 / 16 * 1rem);
+    margin-bottom: calc(-4 / 16 * 1rem);
+    width: calc(44 / 16 * 1rem);
+    height: calc(44 / 16 * 1rem);
+    padding: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .dads-notification-banner__icon {
+    color: currentcolor;
+  }
+}
+
+.dads-notification-banner__heading {
+  grid-column: span 2;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: grid;
+  grid-template-columns: inherit;
+  gap: inherit;
+}
+
+.dads-notification-banner__heading-text {
+  padding-top: calc(3 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-900);
+  font-weight: bold;
+  font-size: calc(17 / 16 * 1rem);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 48rem) {
+  .dads-notification-banner__heading-text {
+    padding-top: calc(2 / 16 * 1rem);
+    font-size: calc(20 / 16 * 1rem);
+    line-height: 1.5;
+  }
+}
+
+.dads-notification-banner__close {
+  margin-right: calc(-12 / 16 * 1rem);
+  display: flex;
+  align-self: start;
+  align-items: center;
+  column-gap: calc(4 / 16 * 1rem);
+  background: transparent;
+  border-radius: calc(8 / 16 * 1rem);
+  border: 0;
+  padding-top: calc(4 / 16 * 1rem);
+  padding-right: calc(12 / 16 * 1rem);
+  padding-bottom: calc(6 / 16 * 1rem);
+  padding-left: calc(12 / 16 * 1rem);
+  color: var(--color-neutral-solid-gray-900);
+  font: inherit;
+  line-height: 1;
+  letter-spacing: inherit;
+}
+
+@media (hover: hover) {
+  .dads-notification-banner__close:hover {
+    background-color: var(--color-neutral-solid-gray-50);
+    text-decoration: underline;
+    text-decoration-thickness: calc(1 / 16 * 1rem);
+    text-underline-offset: calc(3 / 16 * 1rem);
+  }
+}
+
+.dads-notification-banner__close:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  background-color: var(--color-primitive-yellow-300);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-notification-banner__close-icon {
+  margin-top: calc(2 / 16 * 1rem);
+  width: calc(24 / 16 * 1rem);
+  height: calc(24 / 16 * 1rem);
+}
+
+.dads-notification-banner__mobile-close {
+  margin-top: calc(4 / 16 * 1rem);
+  border: 0;
+  border-radius: calc(4 / 16 * 1rem);
+  background: transparent;
+  padding: 0;
+  color: var(--color-neutral-black);
+  touch-action: manipulation;
+}
+
+@media (hover: hover) {
+  .dads-notification-banner__mobile-close:hover {
+    outline: 1px solid;
+    background-color: var(--color-neutral-solid-gray-50);
+  }
+}
+
+.dads-notification-banner__mobile-close:focus-visible {
+  outline: calc(4 / 16 * 1rem) solid var(--color-neutral-black);
+  outline-offset: calc(2 / 16 * 1rem);
+  background-color: var(--color-primitive-yellow-300);
+  box-shadow: 0 0 0 calc(2 / 16 * 1rem) var(--color-primitive-yellow-300);
+}
+
+.dads-notification-banner__mobile-close-icon {
+  display: block;
+  width: calc(44 / 16 * 1rem);
+  height: calc(44 / 16 * 1rem);
+}
+
+.dads-notification-banner__body {
+  margin-top: calc(-4 / 16 * 1rem);
+  display: grid;
+  row-gap: calc(8 / 16 * 1rem);
+  grid-column: 1 / 4;
+  color: var(--color-neutral-solid-gray-800);
+}
+
+@media (min-width: 48rem) {
+  .dads-notification-banner__body {
+    margin-top: 0;
+    grid-column: 2 / 4;
+  }
+}
+
+.dads-notification-banner__body > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.dads-notification-banner__timestamp time {
+  text-autospace: normal;
+}
+
+.dads-notification-banner__actions {
+  margin-bottom: calc(-8 / 16 * 1rem);
+  display: grid;
+  gap: calc(8 / 16 * 1rem);
+  grid-column: 1 / 4;
+}
+
+@media (min-width: 48rem) {
+  .dads-notification-banner__actions {
+    grid-auto-flow: column;
+    gap: calc(16 / 16 * 1rem);
+    grid-column: 2 / 4;
+    justify-content: end;
+  }
+}
+
+.dads-notification-banner .dads-button {
+  width: auto;
+}
+
+.dads-notification-banner[data-type="success"] .dads-button {
+  --button-color: var(--color-semantic-success-2);
+  --button-hover-color: var(--color-primitive-green-1000);
+  --button-active-color: var(--color-primitive-green-1200);
+  --button-outline-hover-bg-color: var(--color-primitive-green-200);
+  --button-outline-active-bg-color: var(--color-primitive-green-300);
+}
+
+.dads-notification-banner[data-type="error"] .dads-button {
+  --button-color: var(--color-semantic-error-1);
+  --button-hover-color: var(--color-primitive-red-1000);
+  --button-active-color: var(--color-primitive-red-1200);
+  --button-outline-hover-bg-color: var(--color-primitive-red-200);
+  --button-outline-active-bg-color: var(--color-primitive-red-300);
+}
+
+.dads-notification-banner[data-type="warning"] .dads-button {
+  --button-color: var(--color-semantic-warning-yellow-2);
+  --button-hover-color: var(--color-primitive-yellow-1000);
+  --button-active-color: var(--color-primitive-yellow-1200);
+  --button-outline-hover-bg-color: var(--color-primitive-yellow-200);
+  --button-outline-active-bg-color: var(--color-primitive-yellow-300);
+}
+
+.dads-notification-banner[data-type="info-1"] .dads-button {
+  --button-color: var(--color-primitive-blue-900);
+  --button-hover-color: var(--color-primitive-blue-1000);
+  --button-active-color: var(--color-primitive-blue-1200);
+  --button-outline-hover-bg-color: var(--color-primitive-blue-200);
+  --button-outline-active-bg-color: var(--color-primitive-blue-300);
+}
+
+.dads-notification-banner[data-type="info-2"] .dads-button {
+  --button-color: var(--color-neutral-solid-gray-800);
+  --button-hover-color: var(--color-neutral-solid-gray-900);
+  --button-active-color: var(--color-neutral-black);
+  --button-outline-hover-bg-color: var(--color-neutral-solid-gray-200);
+  --button-outline-active-bg-color: var(--color-neutral-solid-gray-300);
+}
+
+body { font-family: var(--font-family-sans); color: var(--color-neutral-solid-gray-800); background: var(--color-neutral-white); line-height: 1.8; max-width: 64rem; margin: 0 auto; padding: 2rem 1rem 4rem; }
+.container { max-width: 100%; margin: 0; padding: 0; }
+h1 { font-size: 2.125rem; font-weight: 700; line-height: 1.4; margin: 0 0 1rem; color: var(--color-neutral-solid-gray-900); }
+h2 { font-size: 1.5rem; font-weight: 700; line-height: 1.5; margin: 2.5rem 0 .75rem; padding-bottom: .5rem; border-bottom: 1px solid var(--color-neutral-solid-gray-200); color: var(--color-neutral-solid-gray-900); }
+h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.5; margin: 1.75rem 0 .5rem; color: var(--color-neutral-solid-gray-900); }
+p { margin: 0 0 1rem; }
+ul,ol { margin: 0 0 1rem; padding-left: 1.25rem; }
+li { margin-block: .25rem; }
+a { color: var(--color-key-900); }
+.cta-button,.btn,.cta-primary,.cta-secondary { display: inline-block; text-decoration: none; font-weight: 700; padding: calc(12 / 16 * 1rem) calc(24 / 16 * 1rem); border-radius: calc(8 / 16 * 1rem); margin: .25rem .5rem .25rem 0; }
+.cta-primary,.btn.primary { background: var(--color-key-900); color: var(--color-neutral-white); border: 1px solid var(--color-key-900); }
+.cta-secondary,.btn.secondary { background: var(--color-neutral-white); color: var(--color-key-900); border: 1px solid var(--color-key-900); }
+.cta,.cta-section,.ctas { margin: 1.5rem 0; }
+table { display: block; overflow-x: auto; max-width: 100%; border-collapse: collapse; width: 100%; margin: .75rem 0 1.5rem; font-size: .875rem; }
+th,td { border: 1px solid var(--color-neutral-solid-gray-300); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+th { background: var(--color-neutral-solid-gray-50); font-weight: 700; color: var(--color-neutral-solid-gray-900); }
+code,pre { font-family: var(--font-family-mono); }
+code { background: var(--color-neutral-solid-gray-50); border: 1px solid var(--color-neutral-solid-gray-200); border-radius: 4px; padding: 1px 5px; font-size: .9em; }
+pre { background: var(--color-neutral-solid-gray-50); border: 1px solid var(--color-neutral-solid-gray-200); border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: .8125rem; line-height: 1.7; }
+pre code { background: none; border: 0; padding: 0; }
+.ok { color: var(--color-semantic-success-2); font-weight: 700; }
+.warn { color: var(--color-semantic-warning-yellow-2); font-weight: 700; }
+.err,.critical { color: var(--color-semantic-error-1); font-weight: 700; }
+.critical-cell { background: var(--color-semantic-error-1); color: var(--color-neutral-white); font-weight: 700; }
+.muted { color: var(--color-neutral-solid-gray-600); font-weight: 400; }
+.card,.banner,.pitch,.note,.problem,.differentiator,.what-not,.offer-list,.links,.links-section { border: 1px solid var(--color-neutral-solid-gray-200); border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.25rem 0; background: var(--color-neutral-white); }
+.banner,.note { background: var(--color-neutral-solid-gray-50); }
+.card>:first-child,.banner>:first-child,.pitch>:first-child { margin-top: 0; }
+.card>:last-child,.banner>:last-child,.pitch>:last-child { margin-bottom: 0; }
+.badge,.isic-badge,.tag,.classification { display: inline-block; font-size: .8125rem; font-weight: 700; padding: .1rem .625rem; border-radius: 1rem; background: var(--color-primitive-blue-50); color: var(--color-key-900); border: 1px solid var(--color-primitive-blue-200); }
+.bar { display: flex; align-items: center; gap: .75rem; padding: .75rem 0; margin-bottom: 1rem; border-bottom: 1px solid var(--color-neutral-solid-gray-200); }
+.subtitle { color: var(--color-neutral-solid-gray-600); margin: 0 0 1rem; }
+.num,.amt { font-family: var(--font-family-mono); font-variant-numeric: tabular-nums; }
+footer,.footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-neutral-solid-gray-200); color: var(--color-neutral-solid-gray-600); font-size: .875rem; }
+img,svg { max-width: 100%; height: auto; }
+/* Console layout, layered ON TOP of jp-go-dds.skin/dds+skin (vendored
+   dds.css + compat skin). Every colour below resolves to a DADS token --
+   no raw hex -- so the palette moves when the design system moves.
+   `--blue` is DADS' デジタル庁ブルー (blue-900, #0017c1).
+   The skin centres `body` at 64rem for prose pages; this console is a
+   full-bleed header + its own 1180px main, so those three properties are
+   reset here rather than in the shared skin. */
+:root{--ink:var(--color-neutral-solid-gray-900);
+--muted:var(--color-neutral-solid-gray-600);
+--line:var(--color-neutral-solid-gray-200);
+--bg:var(--color-neutral-solid-gray-50);
+--card:var(--color-neutral-white);
+--blue:var(--color-primitive-blue-900);--blue-soft:var(--color-primitive-blue-50);
+--red:var(--color-primitive-red-900);--red-soft:var(--color-primitive-red-50);
+--amber:var(--color-primitive-orange-900);--amber-soft:var(--color-primitive-orange-50);
+--green:var(--color-primitive-green-800);--green-soft:var(--color-primitive-green-50);
+--hairline:var(--color-neutral-solid-gray-100);}
+*{box-sizing:border-box}
+body{max-width:none;margin:0;padding:0;background:var(--bg);color:var(--ink);
+font-family:var(--font-family-sans);
+font-size:14px;line-height:1.7}
+header.bar{background:var(--blue);color:var(--color-neutral-white);padding:20px 24px}
+header.bar h1{margin:0;font-size:20px;font-weight:700;letter-spacing:.01em}
+header.bar p{margin:6px 0 0;font-size:13px;opacity:.9}
+main{max-width:1180px;margin:24px auto 64px;padding:0 20px}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:8px;
+padding:20px 22px;margin-bottom:20px}
+section.card>h2{margin:0 0 4px;font-size:16px;font-weight:700}
+section.card>p.lede{margin:0 0 14px;color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;font-weight:700;color:var(--muted);
+text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;
+border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--hairline);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.mono,th.mono{font-family:var(--font-family-mono);font-size:12px}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 9px;border-radius:11px;font-size:11px;
+font-weight:700;white-space:nowrap}
+.pill.refuse{background:var(--red-soft);color:var(--red)}
+.pill.gate{background:var(--amber-soft);color:var(--amber)}
+.pill.commit{background:var(--green-soft);color:var(--green)}
+.pill.info{background:var(--blue-soft);color:var(--blue)}
+.pill.flat{background:var(--color-neutral-solid-gray-100);color:var(--muted)}
+.kpi{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 4px;padding:0;list-style:none}
+.kpi li{flex:1 1 150px;border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.kpi b{display:block;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.kpi li.hot{border-color:var(--red);background:var(--red-soft)}
+.kpi li.hot b{color:var(--red)}
+.note{background:var(--color-neutral-solid-gray-50);border-left:3px solid var(--blue);
+padding:10px 14px;margin:14px 0 0;font-size:12.5px;
+color:var(--color-neutral-solid-gray-800)}
+.note.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+code{font-family:var(--font-family-mono);font-size:12px;
+background:var(--color-neutral-solid-gray-100);padding:1px 5px;border-radius:3px}
+footer{max-width:1180px;margin:0 auto 48px;padding:0 20px;color:var(--muted);font-size:12px}
+</style></head><body><header class="bar"><h1>金属・金属鉱石卸売 — Operator Console</h1><p>cloud-itonami-isic-4662 · MetalTradeAdvisor ⊣ :metal-trading-governor · このページは metaltrade.render-html が actor を実際に実行して生成した — 21 実行 / governor HARD 拒否 8 件</p></header><main><section class="card"><h2>実行サマリ</h2><p class="lede">この repo の OperationActor を langgraph の run* で 21 回実行した結果。すべての数値は実行結果から読み出している。</p><ul class="kpi"><li><span>actor 実行</span><b>21</b></li><li class="hot"><span>governor HARD 拒否</span><b>8</b></li><li><span>phase gate による hold</span><b>1</b></li><li><span>承認者による拒否</span><b>1</b></li><li><span>SSoT へ commit</span><b>11</b></li><li><span>拒否された規則の種類</span><b>8</b></li></ul><p class="note">governor の拒否と phase gate は<strong>別物として数えている</strong>。判定は audit fact の <code>:t</code> を第一根拠にし、<code>:violations</code> の有無では判定しない — 承認者拒否の fact は <code>{:rule :approver-rejected}</code> という violation を自分で載せるので、violation を数えると governor 拒否を過大に数える。分類は governor 自身の <code>:hard?</code> フラグと突き合わせ、食い違ったらビルドを落とす。</p></section><section class="card"><h2>governor の HARD 拒否 — 8 件</h2><p class="lede">人間の承認者でも覆せない拒否。各行の detail は governor がその場で生成した文字列をそのまま出している。</p><table><thead><tr><th>thread</th><th>op</th><th>subject</th><th>規則</th><th>governor が拒否した内容</th></tr></thead><tbody><tr><td><span class="mono">t05</span></td><td><code>:provenance/verify</code></td><td><code>mo-2</code></td><td><span class="pill refuse">:no-spec-basis</span></td><td>公式spec-basisの引用が無い提案は法域要件として扱えない</td></tr><tr><td><span class="mono">t07</span></td><td><code>:delivery/dispatch</code></td><td><code>mo-3</code></td><td><span class="pill refuse">:credit-uncleared</span></td><td>mo-3 の取引先信用審査(credit-clearance)が未了 -- 出荷提案は進められない</td></tr><tr><td><span class="mono">t09</span></td><td><code>:delivery/dispatch</code></td><td><code>mo-4</code></td><td><span class="pill refuse">:contract-missing</span></td><td>mo-4 に契約条項(contract-terms)の記録が無い -- 出荷提案は進められない</td></tr><tr><td><span class="mono">t11</span></td><td><code>:delivery/dispatch</code></td><td><code>mo-5</code></td><td><span class="pill refuse">:counterparty-sanctions-flag-unresolved</span></td><td>mo-5 の取引先制裁スクリーニング(OFAC等)が未了 -- 出荷・請求提案は進められない</td></tr><tr><td><span class="mono">t13</span></td><td><code>:delivery/dispatch</code></td><td><code>mo-6</code></td><td><span class="pill refuse">:conflict-minerals-provenance-unverified</span></td><td>mo-6 (gold, 紛争鉱物対象)の採掘地までのチェーン・オブ・カストディ記録(chain-of-custody)=false / 紛争フリー認証製錬所(conflict-free-certified smelter)=false -- いずれかが未充足のため出荷提案は進められない</td></tr><tr><td><span class="mono">t16</span></td><td><code>:delivery/dispatch</code></td><td><code>mo-1</code></td><td><span class="pill refuse">:already-dispatched</span></td><td>mo-1 は既に出荷済み</td></tr><tr><td><span class="mono">t17</span></td><td><code>:invoice/settle</code></td><td><code>mo-1</code></td><td><span class="pill refuse">:already-invoiced</span></td><td>mo-1 は既に請求済み</td></tr><tr><td><span class="mono">t18</span></td><td><code>:delivery/dispatch</code></td><td><code>mo-2</code></td><td><span class="pill refuse">:evidence-incomplete</span></td><td>法域の必要書類(信用審査記録/契約書またはPO/制裁スクリーニング記録)が充足していない状態での提案</td></tr></tbody></table><p class="note warn">この 8 件のうち <code>:conflict-minerals-provenance-unverified</code> がこの業種固有の検査で、法域ではなく<strong>金属種</strong>だけで発火する。mo-6（gold）と mo-7（copper）はchain-of-custody / 製錬所認証がどちらも同じく未充足だが、gold は 3TG なので拒否され、copper は拒否されない — 同じ実行の中で両方向を出している。</p></section><section class="card"><h2>phase / rollout gate と人間の承認 — 2 件（governor 拒否ではない）</h2><p class="lede">governor は clean だが、段階的ロールアウトまたは人間の署名が止めたもの。上の HARD 拒否とは数え方も意味も違う。</p><table><thead><tr><th>thread</th><th>phase</th><th>op</th><th>subject</th><th>分類</th><th>止めた主体</th><th>根拠</th></tr></thead><tbody><tr><td><span class="mono">t19</span></td><td>1</td><td><code>:provenance/verify</code></td><td><code>mo-1</code></td><td><span class="pill gate">HOLD · phase gate</span></td><td>metaltrade.phase（ロールアウト段階）</td><td><code>:phase-disabled</code></td></tr><tr><td><span class="mono">t20</span></td><td>3</td><td><code>:invoice/settle</code></td><td><code>mo-7</code></td><td><span class="pill gate">HOLD · 承認者が拒否</span></td><td>人間の承認者</td><td><code>:approver-rejected</code></td></tr></tbody></table><p class="note"><code>t19</code> は <code>:provenance/verify</code> を phase 1 で実行したもの。governor は何も拒否していない（<code>:hard? false</code>、violation 0 件）が、phase 1 は<code>:order/intake</code> しか書き込ませないので <code>:phase-disabled</code> で hold した。<code>t20</code> は governor clean のまま人間の承認者が拒否したもので、その fact は <code>{:rule :approver-rejected}</code> を自分で載せている。この節の 2 件を <code>:disposition :hold</code> だけで数えるとそのまま governor 拒否に混入し、audit fact の <code>:violations</code> の有無で数えても 1 件は取り除けない — だから分類は fact の <code>:t</code> を第一根拠にしている。</p></section><section class="card"><h2>actor 実行ログ</h2><p class="lede">1 行 = 1 回の actor 実行（intake → advise → govern → decide → commit｜hold｜approval）。同一 store 上で順に実行されるので状態は累積する。</p><table><thead><tr><th>thread</th><th>phase</th><th>op</th><th>subject</th><th>分類</th><th>governor 規則</th><th>conf</th><th>備考</th></tr></thead><tbody><tr><td><span class="mono">t01</span></td><td>3</td><td><code>:order/intake</code></td><td><code>mo-1</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.97</td><td>phase 3 で auto-commit できる唯一の op（:order/intake）</td></tr><tr><td><span class="mono">t02</span></td><td>3</td><td><code>:provenance/verify</code></td><td><code>mo-1</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>JPN の spec-basis を引用 → 人間承認 → assessment 確定</td></tr><tr><td><span class="mono">t03</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-1</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>governor clean でも :delivery/dispatch は必ず人間へ escalate</td></tr><tr><td><span class="mono">t04</span></td><td>3</td><td><code>:invoice/settle</code></td><td><code>mo-1</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>governor clean でも :invoice/settle は必ず人間へ escalate</td></tr><tr><td><span class="mono">t05</span></td><td>3</td><td><code>:provenance/verify</code></td><td><code>mo-2</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:no-spec-basis</code></td><td>0.9</td><td>ATL は metaltrade.facts に無い法域 → 要件を創作させない</td></tr><tr><td><span class="mono">t06</span></td><td>3</td><td><code>:provenance/verify</code></td><td><code>mo-3</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>credit-uncleared 検査のための assessment を先に確定させる</td></tr><tr><td><span class="mono">t07</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-3</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:credit-uncleared</code></td><td>0.3</td><td>取引先信用審査が未了</td></tr><tr><td><span class="mono">t08</span></td><td>3</td><td><code>:provenance/verify</code></td><td><code>mo-4</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>contract-missing 検査のための assessment を先に確定させる</td></tr><tr><td><span class="mono">t09</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-4</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:contract-missing</code></td><td>0.3</td><td>契約条項が記録されていない</td></tr><tr><td><span class="mono">t10</span></td><td>3</td><td><code>:provenance/verify</code></td><td><code>mo-5</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>sanctions 検査のための assessment を先に確定させる</td></tr><tr><td><span class="mono">t11</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-5</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:counterparty-sanctions-flag-unresolved</code></td><td>0.3</td><td>制裁スクリーニング未了</td></tr><tr><td><span class="mono">t12</span></td><td>3</td><td><code>:provenance/verify</code></td><td><code>mo-6</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>紛争鉱物検査のための assessment を先に確定させる</td></tr><tr><td><span class="mono">t13</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-6</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:conflict-minerals-provenance-unverified</code></td><td>0.3</td><td>gold（3TG）: chain-of-custody と製錬所認証が両方未充足 — この業種固有の検査</td></tr><tr><td><span class="mono">t14</span></td><td>3</td><td><code>:provenance/verify</code></td><td><code>mo-7</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>非紛争鉱物の対照群を用意する</td></tr><tr><td><span class="mono">t15</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-7</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.9</td><td>copper: mo-6 と同一の未検証 provenance facts でも通る（metal-type gate の対照）</td></tr><tr><td><span class="mono">t16</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-1</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:already-dispatched</code></td><td>0.9</td><td>同一オーダーの二重出荷</td></tr><tr><td><span class="mono">t17</span></td><td>3</td><td><code>:invoice/settle</code></td><td><code>mo-1</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:already-invoiced</code></td><td>0.9</td><td>同一オーダーの二重請求</td></tr><tr><td><span class="mono">t18</span></td><td>3</td><td><code>:delivery/dispatch</code></td><td><code>mo-2</code></td><td><span class="pill refuse">HOLD · governor 拒否</span></td><td><code>:evidence-incomplete</code></td><td>0.9</td><td>assessment を持たない mo-2 を出荷しようとすると何が起きるか（規則名を実測する）</td></tr><tr><td><span class="mono">t19</span></td><td>1</td><td><code>:provenance/verify</code></td><td><code>mo-1</code></td><td><span class="pill gate">HOLD · phase gate</span></td><td>—</td><td>0.9</td><td>governor は clean。phase 1 が書き込みを許していないだけ — 拒否ではない</td></tr><tr><td><span class="mono">t20</span></td><td>3</td><td><code>:invoice/settle</code></td><td><code>mo-7</code></td><td><span class="pill gate">HOLD · 承認者が拒否</span></td><td>—</td><td>0.9</td><td>governor は clean。人間の承認者が拒否した — governor 拒否ではない</td></tr><tr><td><span class="mono">t21</span></td><td>2</td><td><code>:order/intake</code></td><td><code>mo-3</code></td><td><span class="pill commit">COMMIT</span></td><td>—</td><td>0.97</td><td>phase 2 では :order/intake も承認が要る → :order/upsert の approver 保持を実測できる</td></tr></tbody></table></section><section class="card"><h2>実行後の metal-order レジスタ（SSoT）</h2><p class="lede">commit ノードだけが書き込む。HARD 拒否された提案は 1 バイトも書いていない。</p><table><thead><tr><th>id</th><th>order-id</th><th>metal</th><th>counterparty</th><th>法域</th><th>credit</th><th>contract</th><th>chain-of-custody</th><th>smelter 認証</th><th>sanctions</th><th>dispatched</th><th>invoiced</th><th>dispatch #</th><th>invoice #</th></tr></thead><tbody><tr><td><code>mo-1</code></td><td>MO-2026-0001</td><td>tin <span class="pill info">3TG/cobalt</span></td><td>Kaminski Metals Trading GmbH</td><td>JPN</td><td>true</td><td>CIF, net 30 days</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td><td><span class="mono">JPN-DISPATCH-000000</span></td><td><span class="mono">JPN-INVOICE-000000</span></td></tr><tr><td><code>mo-2</code></td><td>MO-2026-0002</td><td>tin <span class="pill info">3TG/cobalt</span></td><td>Atlantis Metals Ltd</td><td>ATL</td><td>true</td><td>CIF, net 30 days</td><td>true</td><td>true</td><td>true</td><td>false</td><td>false</td><td><span class="mono">—</span></td><td><span class="mono">—</span></td></tr><tr><td><code>mo-3</code></td><td>MO-2026-0003</td><td>tin <span class="pill info">3TG/cobalt</span></td><td>Cedar Nonferrous Corp</td><td>JPN</td><td>false</td><td>CIF, net 30 days</td><td>true</td><td>true</td><td>true</td><td>false</td><td>false</td><td><span class="mono">—</span></td><td><span class="mono">—</span></td></tr><tr><td><code>mo-4</code></td><td>MO-2026-0004</td><td>tin <span class="pill info">3TG/cobalt</span></td><td>Delta Ores BV</td><td>JPN</td><td>true</td><td>—</td><td>true</td><td>true</td><td>true</td><td>false</td><td>false</td><td><span class="mono">—</span></td><td><span class="mono">—</span></td></tr><tr><td><code>mo-5</code></td><td>MO-2026-0005</td><td>tin <span class="pill info">3TG/cobalt</span></td><td>Eagle Metals SA</td><td>JPN</td><td>true</td><td>CIF, net 30 days</td><td>true</td><td>true</td><td>false</td><td>false</td><td>false</td><td><span class="mono">—</span></td><td><span class="mono">—</span></td></tr><tr><td><code>mo-6</code></td><td>MO-2026-0006</td><td>gold <span class="pill info">3TG/cobalt</span></td><td>Fenwick Bullion Traders</td><td>JPN</td><td>true</td><td>CIF, net 30 days</td><td>false</td><td>false</td><td>true</td><td>false</td><td>false</td><td><span class="mono">—</span></td><td><span class="mono">—</span></td></tr><tr><td><code>mo-7</code></td><td>MO-2026-0007</td><td>copper</td><td>Granite Copper Cathodes Inc</td><td>JPN</td><td>true</td><td>CIF, net 30 days</td><td>false</td><td>false</td><td>true</td><td>true</td><td>false</td><td><span class="mono">JPN-DISPATCH-000001</span></td><td><span class="mono">—</span></td></tr></tbody></table></section><section class="card"><h2>承認者の帰属 — レンダリング時に実測</h2><p class="lede">この節はコードに書き込んだ結論ではなく、実行後の store を「approver 形のキー」（正規表現 /approv/i）で走査した結果。store が直れば、この表も自動的に直る。</p><table><thead><tr><th>commit した effect</th><th>書き込み先</th><th>commit 件数</th><th>:payload に approver</th><th>:value に approver</th><th>承認者が残るか</th></tr></thead><tbody><tr><td><code>:order/mark-dispatched</code></td><td>metal-dispatch draft records</td><td><span class="num">2</span></td><td><span class="pill commit">あり</span></td><td><span class="pill flat">なし</span></td><td><span class="pill refuse">失われる</span></td></tr><tr><td><code>:order/mark-invoiced</code></td><td>metal-invoice draft records</td><td><span class="num">1</span></td><td><span class="pill commit">あり</span></td><td><span class="pill flat">なし</span></td><td><span class="pill refuse">失われる</span></td></tr><tr><td><code>:order/upsert</code></td><td>metal-order register</td><td><span class="num">1</span></td><td><span class="pill commit">あり</span></td><td><span class="pill flat">なし</span></td><td><span class="pill refuse">失われる</span></td></tr><tr><td><code>:provenance-assessment/set</code></td><td>provenance assessment</td><td><span class="num">6</span></td><td><span class="pill commit">あり</span></td><td><span class="pill flat">なし</span></td><td><span class="pill commit">保持</span></td></tr><tr><td><code>:approval-granted</code></td><td>append-only 監査台帳</td><td><span class="num">0</span></td><td><span class="pill flat">—</span></td><td><span class="pill flat">—</span></td><td><span class="pill refuse">失われる</span></td></tr></tbody></table><p class="note warn">この実行では人間の承認が <strong>10</strong> 件下りた。実行 actor は <code>op-1</code>、承認者は <code>sv-9</code> と<strong>別の識別子</strong>にしてある — 台帳の <code>:committed</code> fact が持つ <code>:actor</code> は<em>実行した actor</em> であって承認者ではないので、両者に同じ id を使うとこの 2 つを取り違えたまま正しく見えてしまう（<code>metaltrade.sim</code> は両方に <code>op-1</code> を使っている）。<br><br>実測の結果、<strong>3 種類の effect で承認者が store に残らない</strong>: <code>:order/mark-dispatched</code>、<code>:order/mark-invoiced</code>、<code>:order/upsert</code>。<code>metaltrade.operation/commit-record</code> は承認者を <code>:payload</code> にだけ載せるが、<code>metaltrade.store</code> の MemStore は <code>:order/upsert</code> で <code>:value</code> を読み、<code>:order/mark-dispatched</code> / <code>:order/mark-invoiced</code> ではどちらも読まない。<br><br><strong>さらに重い問題: 承認は台帳にも残っていない。</strong>この実行の各 run の <code>:audit</code> チャネルには <code>:approval-granted</code> fact が <strong>10</strong> 件生成されたが、append-only 台帳に到達したのは <strong>0</strong> 件である。<code>metaltrade.operation</code> の <code>:commit</code> ノードは <code>commit-fact</code> だけを <code>append-ledger!</code> し、<code>:hold</code> ノードは <code>:governor-hold</code> / <code>:approval-rejected</code> だけを永続化する — <code>:approval-granted</code> を台帳に書くノードが存在せず、run が終わると in-memory の audit チャネルごと失われる。結果として、この実行で承認者 <code>sv-9</code> の識別子が残っているのは <code>:provenance-assessment/set</code> の payload だけで、レジスタにも出荷・請求ドラフトにも台帳にも残らない。<code>metaltrade.store</code> の namespace docstring は台帳について 「approved by whom は immutable log への query で always 答えられる」と述べているが、<strong>この実装ではその query は答えられない。</strong><br><br><strong>この 2 点はこのタスクでは修正していない — 開示のみ。</strong>レンダリング作業の中で store / actor の監査意味論を黙って変えない。</p></section><section class="card"><h2>append-only 監査台帳 — 21 fact</h2><p class="lede">commit も hold も同じ台帳に残る。「誰が承認したか」を後から問い直せるかどうかは次節で実測している。</p><table><thead><tr><th>#</th><th>fact 型</th><th>op</th><th>subject</th><th>disposition</th><th>actor / by</th><th>基礎</th><th>phase 理由</th></tr></thead><tbody><tr><td><span class="num">1</span></td><td><code>:committed</code></td><td><code>:order/intake</code></td><td><code>mo-1</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:id, :counterparty</td><td><code>—</code></td></tr><tr><td><span class="num">2</span></td><td><code>:committed</code></td><td><code>:provenance/verify</code></td><td><code>mo-1</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>関税法 (Customs Act); 輸出貿易管理令 (Foreign Exchange and Foreign Trade Control Act / Export Trade Control Order), https://www.customs.go.jp/, OECD Due Diligence Guidance for Responsible Supply Chains of Minerals from Conflict-Affected and High-Risk Areas (3rd edition, 2016)</td><td><code>—</code></td></tr><tr><td><span class="num">3</span></td><td><code>:committed</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-1</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>mo-1</td><td><code>—</code></td></tr><tr><td><span class="num">4</span></td><td><code>:committed</code></td><td><code>:invoice/settle</code></td><td><code>mo-1</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>mo-1</td><td><code>—</code></td></tr><tr><td><span class="num">5</span></td><td><code>:governor-hold</code></td><td><code>:provenance/verify</code></td><td><code>mo-2</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:no-spec-basis</td><td><code>—</code></td></tr><tr><td><span class="num">6</span></td><td><code>:committed</code></td><td><code>:provenance/verify</code></td><td><code>mo-3</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>関税法 (Customs Act); 輸出貿易管理令 (Foreign Exchange and Foreign Trade Control Act / Export Trade Control Order), https://www.customs.go.jp/, OECD Due Diligence Guidance for Responsible Supply Chains of Minerals from Conflict-Affected and High-Risk Areas (3rd edition, 2016)</td><td><code>—</code></td></tr><tr><td><span class="num">7</span></td><td><code>:governor-hold</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-3</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:credit-uncleared</td><td><code>—</code></td></tr><tr><td><span class="num">8</span></td><td><code>:committed</code></td><td><code>:provenance/verify</code></td><td><code>mo-4</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>関税法 (Customs Act); 輸出貿易管理令 (Foreign Exchange and Foreign Trade Control Act / Export Trade Control Order), https://www.customs.go.jp/, OECD Due Diligence Guidance for Responsible Supply Chains of Minerals from Conflict-Affected and High-Risk Areas (3rd edition, 2016)</td><td><code>—</code></td></tr><tr><td><span class="num">9</span></td><td><code>:governor-hold</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-4</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:contract-missing</td><td><code>—</code></td></tr><tr><td><span class="num">10</span></td><td><code>:committed</code></td><td><code>:provenance/verify</code></td><td><code>mo-5</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>関税法 (Customs Act); 輸出貿易管理令 (Foreign Exchange and Foreign Trade Control Act / Export Trade Control Order), https://www.customs.go.jp/, OECD Due Diligence Guidance for Responsible Supply Chains of Minerals from Conflict-Affected and High-Risk Areas (3rd edition, 2016)</td><td><code>—</code></td></tr><tr><td><span class="num">11</span></td><td><code>:governor-hold</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-5</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:counterparty-sanctions-flag-unresolved</td><td><code>—</code></td></tr><tr><td><span class="num">12</span></td><td><code>:committed</code></td><td><code>:provenance/verify</code></td><td><code>mo-6</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>関税法 (Customs Act); 輸出貿易管理令 (Foreign Exchange and Foreign Trade Control Act / Export Trade Control Order), https://www.customs.go.jp/, OECD Due Diligence Guidance for Responsible Supply Chains of Minerals from Conflict-Affected and High-Risk Areas (3rd edition, 2016)</td><td><code>—</code></td></tr><tr><td><span class="num">13</span></td><td><code>:governor-hold</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-6</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:conflict-minerals-provenance-unverified</td><td><code>—</code></td></tr><tr><td><span class="num">14</span></td><td><code>:committed</code></td><td><code>:provenance/verify</code></td><td><code>mo-7</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>関税法 (Customs Act); 輸出貿易管理令 (Foreign Exchange and Foreign Trade Control Act / Export Trade Control Order), https://www.customs.go.jp/</td><td><code>—</code></td></tr><tr><td><span class="num">15</span></td><td><code>:committed</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-7</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>mo-7</td><td><code>—</code></td></tr><tr><td><span class="num">16</span></td><td><code>:governor-hold</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-1</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:already-dispatched</td><td><code>—</code></td></tr><tr><td><span class="num">17</span></td><td><code>:governor-hold</code></td><td><code>:invoice/settle</code></td><td><code>mo-1</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:already-invoiced</td><td><code>—</code></td></tr><tr><td><span class="num">18</span></td><td><code>:governor-hold</code></td><td><code>:delivery/dispatch</code></td><td><code>mo-2</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:evidence-incomplete</td><td><code>—</code></td></tr><tr><td><span class="num">19</span></td><td><code>:governor-hold</code></td><td><code>:provenance/verify</code></td><td><code>mo-1</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>—</td><td><code>:phase-disabled</code></td></tr><tr><td><span class="num">20</span></td><td><code>:approval-rejected</code></td><td><code>:invoice/settle</code></td><td><code>mo-7</code></td><td>:hold</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:approver-rejected</td><td><code>—</code></td></tr><tr><td><span class="num">21</span></td><td><code>:committed</code></td><td><code>:order/intake</code></td><td><code>mo-3</code></td><td>:commit</td><td>op-1 <span class="pill flat">実行 actor</span></td><td>:id, :counterparty</td><td><code>—</code></td></tr></tbody></table></section><section class="card"><h2>登録ドラフト — 出荷 2 件 / 請求 1 件</h2><p class="lede">metaltrade.registry が構築した未署名ドラフト。署名は事業者の行為であって、この actor の行為ではない。</p><table><thead><tr><th>種別</th><th>record_id</th><th>metal_order_id</th><th>法域</th><th>immutable</th></tr></thead><tbody><tr><td><span class="pill info">metal-dispatch</span></td><td><span class="mono">JPN-DISPATCH-000000</span></td><td><code>mo-1</code></td><td>JPN</td><td>true</td></tr><tr><td><span class="pill info">metal-dispatch</span></td><td><span class="mono">JPN-DISPATCH-000001</span></td><td><code>mo-7</code></td><td>JPN</td><td>true</td></tr><tr><td><span class="pill info">metal-invoice</span></td><td><span class="mono">JPN-INVOICE-000000</span></td><td><code>mo-1</code></td><td>JPN</td><td>true</td></tr></tbody></table></section><section class="card"><h2>ロールアウト段階（metaltrade.phase）</h2><p class="lede">phase gate は governor の判断を緩めない — 慎重にする方向にしか動かない。</p><table><thead><tr><th>phase</th><th>label</th><th>書き込み可</th><th>auto-commit 可</th></tr></thead><tbody><tr><td><span class="num">0</span></td><td>read-only</td><td>—</td><td>—</td></tr><tr><td><span class="num">1</span></td><td>assisted-intake</td><td><code>:order/intake</code></td><td>—</td></tr><tr><td><span class="num">2</span></td><td>assisted-verify</td><td><code>:order/intake</code> <code>:provenance/verify</code></td><td>—</td></tr><tr><td><span class="num">3</span> <span class="pill info">default</span></td><td>supervised-auto</td><td><code>:delivery/dispatch</code> <code>:invoice/settle</code> <code>:order/intake</code> <code>:provenance/verify</code></td><td><code>:order/intake</code></td></tr></tbody></table><p class="note">どの phase の auto 集合にも <code>:delivery/dispatch</code> と <code>:invoice/settle</code> は入らない。governor 側の high-stakes gate も同じ不変条件を独立に強制していて、この実行では両方の層が実際に発火している。</p></section><section class="card"><h2>法域 spec-basis のカバレッジ（正直な報告）</h2><p class="lede">catalog に無い法域には spec-basis が無い。advisor が要件を創作したら governor が止める（この実行の mo-2 / ATL がその実例）。</p><table><thead><tr><th>登録済み法域</th><th>所管当局</th><th>法的根拠</th><th>出典</th></tr></thead><tbody><tr><td><code>ARG</code></td><td>Administración Federal de Ingresos Públicos (AFIP) -- disuelta el 24/10/2024 y sucedida por la Agencia de Recaudación y Control Aduanero (ARCA), ambas entidades autárquicas del Ministerio de Economía (Decreto 953/2024, Arts. 1-2)</td><td>Resolución General (AFIP) N° 2849/2010: crea el &quot;Registro de Comercializadores de Materiales a Reciclar&quot; (Art. 1, inc. e: &quot;Metales ferrosos o no ferrosos&quot;; registration required per Art. 2 for recicladores/acopiadores/galponeros/generadores de &quot;scrap&quot;/intermediarios); régimen mensual de información de operaciones de compra por vendedor (Título III, Arts. 55-61, Formulario 956); comprobante especial de compra a recolectores individuales (Título IV, Cap. II, Arts. 64-66, Anexo IX)</td><td><span class="mono">https://servicios.infoleg.gob.ar/infolegInternet/anexos/165000-169999/168455/norma.htm</span></td></tr><tr><td><code>DEU</code></td><td>Generalzolldirektion (German Customs) under the Bundesministerium der Finanzen (BMF)</td><td>Union Customs Code (Regulation (EU) No 952/2013); EU financial sanctions regulations</td><td><span class="mono">https://www.zoll.de/</span></td></tr><tr><td><code>GBR</code></td><td>HM Revenue &amp; Customs (HMRC) / Office of Financial Sanctions Implementation (OFSI)</td><td>Taxation (Cross-border Trade) Act 2018; Sanctions and Anti-Money Laundering Act 2018 (SAMLA 2018)</td><td><span class="mono">https://www.gov.uk/government/organisations/hm-revenue-customs</span></td></tr><tr><td><code>JPN</code></td><td>財務省 (MOF) 関税局 / 経済産業省 (METI)</td><td>関税法 (Customs Act); 輸出貿易管理令 (Foreign Exchange and Foreign Trade Control Act / Export Trade Control Order)</td><td><span class="mono">https://www.customs.go.jp/</span></td></tr><tr><td><code>USA</code></td><td>U.S. Customs and Border Protection (CBP, DHS) / OFAC (U.S. Treasury)</td><td>Tariff Act of 1930 (19 U.S.C. Chapter 4), customs entry requirements; OFAC sanctions programs</td><td><span class="mono">https://www.cbp.gov/</span></td></tr></tbody></table><p class="note">cloud-itonami-isic-4662 R0: 5 jurisdictions seeded with an official spec-basis. This is a starting catalog, not a survey of all ~194 jurisdictions -- extend `metaltrade.facts/catalog`, never fabricate a jurisdiction's requirements.</p></section></main><footer>生成元: <code>metaltrade.render-html</code>（<code>clojure -M:dev:render-html</code>）。seed は <code>metaltrade.store/seed-db</code>。実行ごとに変わる値（UUID・実時刻）は意図的に載せていないので、同じ commit からは同じバイト列が出る。</footer></body></html>
