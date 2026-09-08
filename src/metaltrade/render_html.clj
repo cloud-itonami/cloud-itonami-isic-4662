@@ -52,7 +52,7 @@
      NO file -- when the run yields zero HARD governor refusals. A
      console that shows only green is not evidence the governor works."
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [jp-go-dds.skin :as dds-skin]
             [langgraph.graph :as g]
             [metaltrade.facts :as facts]
