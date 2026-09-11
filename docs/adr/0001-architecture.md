@@ -372,7 +372,7 @@ warehouse automation are both real and load-bearing for THIS actor's
 - `MemStore` || `DatomicStore` parity is proven by
   `test/metaltrade/store_contract_test.cljk`.
 - 41 tests / 208 assertions pass; lint is clean; the demo
-  (`clojure -M:dev:run`) walks one clean provenance-verify + dispatch +
+  (`kbb -M:dev:run`) walks one clean provenance-verify + dispatch +
   invoice lifecycle, six HARD-hold scenarios (no spec-basis, credit-
   uncleared, contract-missing, conflict-minerals-provenance-unverified,
   sanctions, double dispatch, double invoice), PLUS a control scenario
