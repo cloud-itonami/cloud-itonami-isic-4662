@@ -247,7 +247,7 @@ discipline every prior governor's guards establish, informed by
 `metaltrade.store/Store` is implemented by both `MemStore` (atom-
 backed, default for dev/tests/demo) and `DatomicStore` (`langchain.db`-
 backed), proven to satisfy the same contract in
-`test/metaltrade/store_contract_test.clj`. The ledger stays append-only
+`test/metaltrade/store_contract_test.cljk`. The ledger stays append-only
 on every backend: which metal-order was verified for a jurisdiction with
 no official spec-basis, which counterparty had credit-uncleared / no
 contract / unverified conflict-minerals provenance / an unresolved
@@ -370,7 +370,7 @@ warehouse automation are both real and load-bearing for THIS actor's
   future vertical whose defining regulatory concern attaches to the
   commodity itself rather than to where the trade happens.
 - `MemStore` || `DatomicStore` parity is proven by
-  `test/metaltrade/store_contract_test.clj`.
+  `test/metaltrade/store_contract_test.cljk`.
 - 41 tests / 208 assertions pass; lint is clean; the demo
   (`clojure -M:dev:run`) walks one clean provenance-verify + dispatch +
   invoice lifecycle, six HARD-hold scenarios (no spec-basis, credit-

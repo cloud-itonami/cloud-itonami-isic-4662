@@ -87,7 +87,7 @@ domain (Wholesale of Metals and Metal Ores, ISIC 4662) and to the three
 `:human-rights`, `:transparency`).
 
 This is the rule the companion contract test
-(`test/metaltrade/governor_contract_test.clj`) encodes end-to-end: the
+(`test/metaltrade/governor_contract_test.cljk`) encodes end-to-end: the
 MetalTradeAdvisor never dispatches bulk metal/ore to a counterparty or
 settles an invoice the Metal Trading Governor would reject,
 `:delivery/dispatch` and `:invoice/settle` NEVER auto-commit at any
