@@ -42,9 +42,9 @@
   :dev {:override-deps
         {io.github.kotoba-lang/langchain
          {:local/root "../../kotoba-lang/langchain"}}}
-  ;; clojure -M:dev:run  -> drive the demo through one OperationActor
+  ;; kbb -M:dev:run  -> drive the demo through one OperationActor
   :run {:main-opts ["-m" "metaltrade.sim"]}
-  ;; clojure -M:dev:render-html  -> RUN the actor and render
+  ;; kbb -M:dev:render-html  -> RUN the actor and render
   ;; docs/samples/operator-console.html from the real run output.
   ;; Throws (and writes nothing) if the run yields no hard governor hold.
   ;; Optional arg: output path (used by the determinism check).

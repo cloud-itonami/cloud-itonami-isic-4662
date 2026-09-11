@@ -691,7 +691,7 @@ footer{max-width:1180px;margin:0 auto 48px;padding:0 20px;color:var(--muted);fon
          (phase-section)
          (coverage-section)
          "</main><footer>生成元: <code>metaltrade.render-html</code>"
-         "（<code>clojure -M:dev:render-html</code>）。seed は "
+         "（<code>kbb -M:dev:render-html</code>）。seed は "
          "<code>metaltrade.store/seed-db</code>。実行ごとに変わる値（UUID・実時刻）は"
          "意図的に載せていないので、同じ commit からは同じバイト列が出る。</footer>"
          "</body></html>")))
