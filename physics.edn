@@ -1,0 +1,33 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:dev:physics` runs it.
+;;
+;; README "Robotics premise": a stacker-reclaimer/conveyor robot reclaims
+;; bulk ore at the wholesale yard and an overhead-crane/forklift robot picks
+;; ingots, coils and cathodes at the warehouse (ISIC 4662). The physical
+;; work: a forklift carrying a cathode bundle over the sloping yard, and the
+;; incoming tensile check of a steel plate lot before it is traded on.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isic-4662"
+ :cases
+ [{:id :cathode-bundle-on-yard-slope
+   :kind :transport
+   :procedure "forklift carries a 2 t copper-cathode bundle 60 m across the yard, over grades up to the swept slope, and brakes at 1.5 m/s2"
+   :params {:mass-kg 5500.0 :payload-kg 2000.0 :distance-m 60.0 :v-max-mps 2.0 :a-max-mps2 0.5
+            :brake-decel-mps2 1.5 :drive-force-n 25000.0 :crr 0.02 :cog-height-m 0.80
+            :payload-cog-height-m 1.00 :support-half-length-m 0.80 :max-time-s 1200.0}
+   :sweep {:param :slope-deg :values [0.0 3.0 6.0 9.0 12.0]}
+   :quantity :min-tipover-margin
+   :limit {:min 0.7 :basis "estimate: longitudinal stability reserve kept on the yard grade with a dense, short load"}
+   :boundary {:lo 0.0 :hi 20.0}}
+  {:id :s355-plate-lot-tensile
+   :kind :material
+   :procedure "tensile test of a 10 mm round specimen cut from an incoming S355 steel-plate lot, checking the mill certificate before the lot is traded on"
+   :params {:length-m 0.10 :area-m2 7.854e-5 :youngs-modulus-pa 210.0e9 :hardening-pa 1.0e9
+            :density-kg-m3 7850.0 :max-force-n 45000.0}
+   :sweep {:param :yield-stress-pa :values [315.0e6 335.0e6 355.0e6 375.0e6 400.0e6]}
+   :quantity :yield-force-n
+   :limit {:min 27882.0 :basis "EN 10025-2 S355 (nominal thickness up to 16 mm): minimum upper yield strength ReH 355 MPa, times the 10 mm specimen's 78.54 mm2 section"}
+   :boundary {:lo 250.0e6 :hi 500.0e6}}]}
