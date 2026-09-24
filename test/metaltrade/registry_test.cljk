@@ -1,5 +1,5 @@
 (ns metaltrade.registry-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [metaltrade.registry :as r]))
 
 ;; The metal-trading domain checks (credit-clearance, contract-on-file,
